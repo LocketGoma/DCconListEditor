@@ -10,3 +10,10 @@ BBCC Addon : DCCon List Editor
 용어 정리
 1. 디시콘 리스트 : '실제 디시콘 이미지 파일'들의 목록을 의미.
 2. 디시콘 엔트리 : 'dccon_list.js' 파일에 들어가 있는 목록을 의미.
+
+
+
+
+
+Special Thanks.
+맛물님 (https://github.com/krynen), 네쓰윗님 (https://github.com/rishubil)
