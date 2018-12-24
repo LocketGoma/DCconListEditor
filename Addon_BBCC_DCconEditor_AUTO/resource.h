@@ -1,9 +1,9 @@
 #pragma once
 //사용될 공용 헤더들
-#include <windows.h>
 #include <iostream>
 #include <string>
 #include <map>
+
 
 using namespace std;
 

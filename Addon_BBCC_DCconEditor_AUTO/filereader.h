@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <filesystem>	//C++17
+#include <typeinfo>
 
 namespace fs = std::filesystem;
 

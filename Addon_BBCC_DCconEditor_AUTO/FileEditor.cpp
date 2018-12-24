@@ -104,8 +104,9 @@ void entry_test() {
 	
 }
 
-void dump()			//쓸지말지 버릴지 안버릴지 아직 못정한것들. 
+void dump()			//쓸지말지 버릴지 안버릴지 아직 못정한것들. 사용시 codecvt 헤더 필요, windows.h 헤더 필요.
 {
+	/*
 	setlocale(LC_ALL, "korean");
 	dcconlist->seekg(16);
 	string temp;
@@ -145,6 +146,9 @@ void dump()			//쓸지말지 버릴지 안버릴지 아직 못정한것들.
 
 	cout << sstr << endl;
 	wcout << bgs << endl;
+
+	*/
+
 	//00111111 (=3F)
 
 	//ADF9 -> B1 / D8
