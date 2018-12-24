@@ -77,7 +77,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\LocketGoma\Desktop\Addon_BBCC_DCconEditor_AUTO\Addon_BBCC_DCconEditor_AUTO\addition\lib;C:\Users\LocketGoma\Desktop\Addon_BBCC_DCconEditor_AUTO\Addon_BBCC_DCconEditor_AUTO\addition\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Users\LocketGoma\Desktop\Addon_BBCC_DCconEditor_AUTO\Addon_BBCC_DCconEditor_AUTO\addition\libiconv;C:\Users\LocketGoma\Desktop\Addon_BBCC_DCconEditor_AUTO\Addon_BBCC_DCconEditor_AUTO\addition\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libiconvD.lib;libiconv.lib;libiconvStatic.lib;libiconvStaticD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

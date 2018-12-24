@@ -1,0 +1,5 @@
+﻿  FileEditor.cpp
+c:\users\locketgoma\desktop\addon_bbcc_dcconeditor_auto\addon_bbcc_dcconeditor_auto\fileeditor.cpp(133): warning C4244: '=': 'wchar_t'에서 'char'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Interface.cpp
+  코드를 생성하고 있습니다...
+  Addon_BBCC_DCconEditor_AUTO.vcxproj -> C:\Users\LocketGoma\Desktop\Addon_BBCC_DCconEditor_AUTO\Debug\Addon_BBCC_DCconEditor_AUTO.exe
