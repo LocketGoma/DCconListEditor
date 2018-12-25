@@ -3,19 +3,20 @@
 #include "FileEditor.h"
 #include "addition/include/iconv.h"
 
+extern map <string, bool> name_list;	//디시콘 이름 리스트. 이름 / 리스트 존재유무. 일단 wstring 말고 string으로 하고, 노멀 string이 문제생길시 wstring으로 교체할것.
+extern map <string, bool>::iterator list_iter;
+
+
+map <string, int> entry_list;		//파일에 있는 아이콘 리스트를 기록하는 map 자료형. 이름 / 파일 존재 유무 (0 : 리스트에만 있고 파일 없음 / 1 : 파일-리스트 일치 / 2~ : 중복된 이름의 파일 존재)
+map <string, int>::iterator entry_iter = entry_list.begin();
 
 
 
 /*'dccon_list.js 파일을 읽고, 수정하는 목적.*/
 /*사실상 메인 코드*/
-
-map <string, int> entry_list;		//파일에 있는 아이콘 리스트를 기록하는 map 자료형. 이름 / 파일 존재 유무 (0 : 리스트에만 있고 파일 없음 / 1 : 파일-리스트 일치 / 2~ : 중복된 이름의 파일 존재)
-map <string, int>::iterator entryiter = entry_list.begin();
+//map <string, int> entry_list;
 string default_path = "lib/dccon_list.js";	//기본 경로
 unique_ptr<fstream> dcconlist = make_unique<fstream>(default_path);
-
-
-
 
 void entry_maker() {
 	setlocale(LC_ALL, "korean");
@@ -28,7 +29,6 @@ void entry_maker() {
 	}
 }
 bool entry_parser() {
-
 	string input;
 	string midpoint;
 	string output;
@@ -37,13 +37,17 @@ bool entry_parser() {
 		return false;
 
 	midpoint = convert_to_cp949(input.c_str());
-	cout << midpoint << endl;
+	
 
 	if (midpoint.find("name") == string::npos)
 		return false;
 
 	output = midpoint.substr(midpoint.find("name") + 6, midpoint.find(""",")-(midpoint.find("name") + 7));
+
+#ifdef DEBUG
+	cout << midpoint << endl;
 	cout << output << endl;
+#endif // DEBUG
 
 	entry_list.insert(pair<string, int>(output, 0));
 
@@ -71,21 +75,102 @@ string convert_to_cp949(const char * input) {
 	return answer;
 }
 
+int comparison() {
+	int entry_size = entry_list.size();
+	int list_size = name_list.size();
+	
+	
+	try {
+		for (list_iter = name_list.begin(); list_iter != name_list.end(); ++list_iter) {
+			for (entry_iter = entry_list.begin(); entry_iter != entry_list.end(); ++entry_iter) {
+				if (list_iter->first.compare(entry_iter->first) == 0) {
+					list_iter->second = true;
+					entry_iter->second++;
+				}
+			}
+		}
+	}
+	catch (exception e) {
+		return -1;
+	}
+	
+#ifdef DEBUG
+	for (entry_iter = entry_list.begin(); entry_iter != entry_list.end(); ++entry_iter) {
+		cout << entry_iter->first << ":";
+		cout << entry_iter->second << endl;
+	}
+	for (list_iter = name_list.begin(); list_iter != name_list.end(); ++list_iter) {
+		cout << list_iter->first << ":";
+		if (list_iter->second == true)
+			cout << "true" << endl;
+		else
+		cout << "false" << endl;
+	}
+#endif //  
+
+	return 1;
+
+}
+void list_entry_printer() {	//완성된 리스트를 쓰는 부분
+	//일단 임시
+	string temp;
+	string midpoint;
+	string output;
+	ofstream ofile("test.txt");
+
+	dcconlist->seekg(0);
+
+	if (ofile.is_open()) {
+		while (!dcconlist->eof()) {
+			getline(*dcconlist, temp);
+			//---비교부분
+			if (temp.find("name") == string::npos) {
+				ofile << temp << endl;
+				continue;
+			}
+
+			midpoint = temp.substr(midpoint.find("name") + 9, temp.find(""",") - (temp.find("name") + 7));
+			output = convert_to_cp949(midpoint.c_str());
+			cout << output << endl;
+			entry_iter = entry_list.find(output);
+				if (entry_iter != entry_list.end()) {
+					if (entry_iter->second != 0) {
+						ofile << temp << endl;
+					}
+					else {
+						continue;
+					}
+			}
+
+
+
+			//---
+			
+		}
+		ofile.close();
+	}
+
+
+
+}
+
 
 
 
 
 #ifdef DEBUG
 void entry_test() {
-	entry_maker();
-	
-	string temp;
-
 	if (dcconlist->is_open())
 		cout << "opened" << endl;
+	entry_maker();
+	
+	comparison();
+
+	list_entry_printer();
 	
 	//else {
 	/*
+	string temp;
 		ofstream ofile("test.txt");
 		if (ofile.is_open()) {
 			while (!dcconlist->eof()) {

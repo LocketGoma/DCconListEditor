@@ -1,8 +1,11 @@
 #include "filereader.h"
 //'디시콘 폴더'에서 디시콘이름 목록만 갖고오는 부분.
 
-map <string,bool> name_list;	//디시콘 이름 리스트. 이름 / 리스트 존재유무. 일단 wstring 말고 string으로 하고, 노멀 string이 문제생길시 wstring으로 교체할것.
-map <string, bool>::iterator list_iter = name_list.begin();
+
+map <string, bool> name_list;	//디시콘 이름 리스트. 이름 / 리스트 존재유무. 일단 wstring 말고 string으로 하고, 노멀 string이 문제생길시 wstring으로 교체할것.
+map <string, bool>::iterator list_iter;
+
+
 
 void list_reader() {		//'일단' 구현됨
 	string path = "images/dccon";	
