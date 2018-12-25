@@ -23,5 +23,5 @@ dcConsData = [
 	{name:"이브캡슐흠.gif",	keywords:["이브캡슐흠"],	tags:["이브","흠"]},
 	{name:"정신병자들.png",	keywords:["정신병자들"],	tags:["포켓몬","피카츄","정신병자"]},
 	{name:"서울사이버맨.png",	keywords:["서울사이버맨"],	tags:["닥터후","사이버맨"]},
-	{name:"쨍그랑.png",	keywords:["쨍그랑"],	tags:["기타"]}	
+	{name:"쨍그랑.png",	keywords:["쨍그랑"],	tags:["기타"]}
 ];

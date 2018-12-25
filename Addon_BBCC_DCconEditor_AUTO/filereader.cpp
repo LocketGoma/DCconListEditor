@@ -51,7 +51,7 @@ void list_reader(string path) {
 void list_tester() {
 	list_reader();
 
-	dccon_list_print();
+	//dccon_list_print();
 
 }
 void dccon_list_print() {

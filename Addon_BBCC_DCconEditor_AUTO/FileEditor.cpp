@@ -36,13 +36,14 @@ bool entry_parser() {
 	if (dcconlist->fail() == true)
 		return false;
 
-	midpoint = convert_to_cp949(input.c_str());
+	if (input.find("name") == string::npos)
+		return false;
+	midpoint = input.substr(input.find("name") + 6, input.find(""",") - (input.find("name") + 7));
 	
 
-	if (midpoint.find("name") == string::npos)
-		return false;
+	
 
-	output = midpoint.substr(midpoint.find("name") + 6, midpoint.find(""",")-(midpoint.find("name") + 7));
+	output = convert_to_cp949(midpoint.c_str());
 
 #ifdef DEBUG
 	cout << midpoint << endl;
@@ -72,6 +73,33 @@ string convert_to_cp949(const char * input) {
 
 	iconv_close(changer);
 
+	return answer;
+}
+string convert_to_UTF8(const char * input) {
+	iconv_t changer;
+	changer = iconv_open("UTF-8", "CP949");
+
+	char deString[256] = { 0, };
+	char * dest = deString;
+
+	const char * test = input;
+
+	size_t stLen = (strlen(input) + 1) * sizeof(char);
+	size_t dsLen = 255;
+
+	if (changer != (iconv_t)(-1))
+		iconv(changer, &test, &stLen, &dest, &dsLen);
+
+	string answer(deString);
+
+	iconv_close(changer);
+
+	return answer;
+}
+string covert_input_manager(string input) {
+	string temp=convert_to_UTF8(input.c_str());
+	string answer;
+	answer = "\t{name:\"" + temp + "\",\t keywords:[\"" + temp.substr(0, temp.size() - ext_length) + "\"], \t tags:[]}";
 	return answer;
 }
 
@@ -117,7 +145,7 @@ void list_entry_printer() {	//완성된 리스트를 쓰는 부분
 	string midpoint;
 	string output;
 	ofstream ofile("test.txt");
-
+	bool end_line = false;
 	dcconlist->seekg(0);
 
 	if (ofile.is_open()) {
@@ -125,32 +153,43 @@ void list_entry_printer() {	//완성된 리스트를 쓰는 부분
 			getline(*dcconlist, temp);
 			//---비교부분
 			if (temp.find("name") == string::npos) {
-				ofile << temp << endl;
+				if (end_line == true)
+					break;
+
+				ofile << temp;
+				end_line = true;
 				continue;
 			}
-
 			midpoint = temp.substr(midpoint.find("name") + 9, temp.find(""",") - (temp.find("name") + 7));
 			output = convert_to_cp949(midpoint.c_str());
 			cout << output << endl;
 			entry_iter = entry_list.find(output);
 				if (entry_iter != entry_list.end()) {
 					if (entry_iter->second != 0) {
-						ofile << temp << endl;
+						if (end_line == true)
+							ofile << endl;
+						ofile << temp;
 					}
 					else {
 						continue;
 					}
 			}
-
-
-
-			//---
-			
 		}
-		ofile.close();
+		for (list_iter = name_list.begin(); list_iter != name_list.end(); ++list_iter) {
+			if (list_iter->second == false) {
+				ofile << "," << endl;
+				string tp = covert_input_manager(list_iter->first);
+				ofile << tp;
+			}
+
+		}
+		
 	}
+	ofile << "\n"+temp << endl;
 
 
+
+	ofile.close();
 
 }
 
