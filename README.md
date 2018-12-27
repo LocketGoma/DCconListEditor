@@ -1,13 +1,13 @@
 BBCC Addon : DCCon List Editor
 ===
-version 0.0.5
+version 0.1.0
 
 해당 프로그램의 소스코드는 Visual Studio 2017 / C++17 이상에서만 정상작동을 보장합니다.
 
 ## 개요
 해당 프로젝트는 트위치 확장 프로그램인 Bridge BBCC (https://github.com/krynen/BridgeBBCC) 프로젝트의 애드온으로 제작되는 프로젝트입니다.
 
-현재 개발중.
+현재 알파 테스트 빌드.
 
 
 
@@ -17,6 +17,8 @@ version 0.0.5
 2. 디시콘 엔트리 : 'dccon_list.js' 파일에 들어가 있는 목록을 의미.
 
 
+## 유의사항
+코드 테스트 시 반드시 libiconv 라이브러리의 경로를 설정해줘야하고, C++ 빌드 버전을 C++17로 해야합니다.
 
 
 
