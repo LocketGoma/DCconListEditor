@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <locale>
+#include <cstdio>
 
 
 
@@ -12,6 +13,8 @@ string convert_to_cp949(const char * input);	//UTF-8 to CP949
 string convert_to_UTF8(const char * input);
 string covert_input_manager(string input);
 
+void list_entry_printer();
+void list_entry_copier();
 
 
 

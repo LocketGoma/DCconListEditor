@@ -5,7 +5,6 @@
 #include <map>
 #include <vector>
 
-
 using namespace std;
 
 /*	용어정리
