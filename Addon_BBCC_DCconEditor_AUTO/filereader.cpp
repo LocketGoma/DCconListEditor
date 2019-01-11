@@ -27,7 +27,7 @@ void list_reader() {		//'일단' 구현됨
 
 	list_iter = name_list.begin();
 }
-void list_reader(string path) {	
+bool list_reader(string path) {	
 	try {
 		for (const auto & entry : fs::directory_iterator(path)) {
 			string temp = entry.path().string().substr(path.size() + 1);
@@ -39,12 +39,26 @@ void list_reader(string path) {
 	}
 	catch (fs::filesystem_error e) {
 		cout << "경로가 잘못되었습니다. 경로를 재 지정해주세요." << endl;
-		return;
+		return false;
 	}
-	if (name_list.empty())
+	if (name_list.empty()) {
 		cout << "조건에 맞는 파일이 존재하지 않습니다. 경로를 재 지정해주세요." << endl;
+		return false;
+	}
+
 
 	list_iter = name_list.begin();
+	return true;
+}
+
+bool list_loaded() {
+	return name_list.empty() ? false : true;
+}
+int dccon_list_print() {
+	for (list_iter = name_list.begin(); list_iter != name_list.end(); list_iter++) {
+		cout << list_iter->first << endl;
+	}
+	return name_list.size();
 }
 	//디버그용 코드
 #ifdef DEBUG
@@ -54,9 +68,5 @@ void list_tester() {
 	//dccon_list_print();
 
 }
-void dccon_list_print() {
-	for (; list_iter != name_list.end(); list_iter++) {
-		cout << list_iter->first << endl;
-	}
-}
+
 #endif // DEBUG

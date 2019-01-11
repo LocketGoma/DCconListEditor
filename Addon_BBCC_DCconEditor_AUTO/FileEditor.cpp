@@ -7,7 +7,7 @@ extern map <string, bool> name_list;	//디시콘 이름 리스트. 이름 / 리스트 존재유�
 extern map <string, bool>::iterator list_iter;
 
 
-map <string, int> entry_list;		//파일에 있는 아이콘 리스트를 기록하는 map 자료형. 이름 / 파일 존재 유무 (0 : 리스트에만 있고 파일 없음 / 1 : 파일-리스트 일치 / 2~ : 중복된 이름의 파일 존재)
+map <string, int> entry_list;		//파일에 있는 아이콘 리스트를 기록하는 map 자료형. 이름 / 파일 존재 유무 (0 : 엔트리에만 있고 파일 없음 / 1 : 파일-리스트 일치 / 2~ : 중복된 이름의 파일 존재)
 map <string, int>::iterator entry_iter = entry_list.begin();
 
 
@@ -16,10 +16,29 @@ map <string, int>::iterator entry_iter = entry_list.begin();
 /*사실상 메인 코드*/
 //map <string, int> entry_list;
 string default_path = "lib/dccon_list.js";	//기본 경로
-unique_ptr<fstream> dcconlist = make_unique<fstream>(default_path);
+unique_ptr<fstream> dcconlist;
 
-void entry_maker() {
+bool linking(string route) {									//1 번
 	setlocale(LC_ALL, "korean");
+
+	if (route == "default_path")
+		route = default_path;
+
+
+	dcconlist = make_unique<fstream>(route);
+
+	string temp;
+	getline(*dcconlist, temp);
+
+	if (temp.substr(0, 10) == "dcConsData") {		
+		return true;
+	}
+	else
+		return false;
+}
+
+void entry_maker() {								// 2번
+	
 	dcconlist->seekg(16);
 
 
@@ -28,7 +47,7 @@ void entry_maker() {
 		locker = entry_parser();
 	}
 }
-bool entry_parser() {
+bool entry_parser() {								// 2-1번
 	string input;
 	string midpoint;
 	string output;
@@ -103,10 +122,9 @@ string covert_input_manager(string input) {
 	return answer;
 }
 
-int comparison() {
+int comparison() {						//비교 수행 부분.
 	int entry_size = entry_list.size();
-	int list_size = name_list.size();
-	
+	int list_size = name_list.size();	
 	
 	try {
 		for (list_iter = name_list.begin(); list_iter != name_list.end(); ++list_iter) {
@@ -139,7 +157,7 @@ int comparison() {
 	return 1;
 
 }
-void list_entry_printer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
+void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 	//일단 임시
 	string temp;
 	string midpoint;
@@ -211,7 +229,12 @@ void list_entry_copier() {		//리스트 카피.
 	remove("test.txt");
 
 }
-
+int list_entry_printer() {
+	for (entry_iter= entry_list.begin(); entry_iter != entry_list.end(); entry_iter++) {
+		cout << entry_iter->first << endl;
+	}
+	return entry_list.size();
+}
 
 
 
@@ -220,11 +243,14 @@ void list_entry_copier() {		//리스트 카피.
 void entry_test() {
 	if (dcconlist->is_open())
 		cout << "opened" << endl;
+
+	linking("default_path");
+
 	entry_maker();
 	
 	comparison();
 
-	list_entry_printer();
+	list_entry_writer();
 
 	list_entry_copier();
 	

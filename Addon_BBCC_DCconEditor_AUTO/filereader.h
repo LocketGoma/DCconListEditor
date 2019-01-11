@@ -9,9 +9,10 @@ namespace fs = std::filesystem;
 
 
 void list_reader();
-void list_reader(string path);
+bool list_reader(string path);
 
-
+bool list_loaded();
+int dccon_list_print();
 
 #ifdef DEBUG
 void list_tester();

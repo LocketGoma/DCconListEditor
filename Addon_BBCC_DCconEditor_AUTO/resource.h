@@ -28,6 +28,6 @@ using namespace std;
 #define name_length 8	//파일 이름 길이 (확장자 제외)
 #define ext_length 4		//확장자 길이
 #define retry_count 3	//읽기 실패 시 재시도 회수
-#define DEBUG
+//#define DEBUG
 
 const string valid_ext_list[3] = { ".jpg",".gif",".png" };
