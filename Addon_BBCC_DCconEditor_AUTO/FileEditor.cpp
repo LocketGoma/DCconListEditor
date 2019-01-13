@@ -200,6 +200,7 @@ void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 				ofile << "," << endl;
 				string tp = covert_input_manager(list_iter->first);
 				ofile << tp;
+				list_iter->second = true;
 			}
 
 		}
@@ -225,9 +226,10 @@ void list_entry_copier() {		//리스트 카피.
 			*dcconlist << temp << endl;
 		}		
 	}
-	
+	//*dcconlist << "ed" << endl;
 	ifile.close();
 
+	dcconlist.~unique_ptr();
 	remove("test.txt");
 
 }
