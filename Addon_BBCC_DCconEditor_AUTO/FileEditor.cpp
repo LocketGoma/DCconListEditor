@@ -180,7 +180,9 @@ void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 			}
 			midpoint = temp.substr(midpoint.find("name") + 9, temp.find(""",") - (temp.find("name") + 7));
 			output = convert_to_cp949(midpoint.c_str());
+#ifdef DEBUG
 			cout << output << endl;
+#endif
 			entry_iter = entry_list.find(output);
 				if (entry_iter != entry_list.end()) {
 					if (entry_iter->second != 0) {

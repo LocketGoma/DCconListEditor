@@ -14,8 +14,8 @@ class DCCon_Editor {
 	private :
 		void display();				//출력부
 		bool select_menu(int input);//메뉴선택
-		void select_list();			//디시콘 리스트 로드
-		void select_entry();		//디시콘 엔트리 로드
+		void select_list(string);			//디시콘 리스트 로드
+		void select_entry(string);		//디시콘 엔트리 로드
 		string list_route;			//디시콘 리스트 경로
 		string entry_route;			//디시콘 엔트리 경로
 		void list_print();			//디시콘 리스트 출력
@@ -71,22 +71,24 @@ void DCCon_Editor::display() {
 }
 
 bool DCCon_Editor::select_menu(int input) {
+	string route;
 	switch (input)
 	{
 		case 1 : {
 			cout << "디시콘 폴더 위치를 지정해주세요" << endl;
 			cout << "형식 :: 'BBCC/images'";
 			cout << "형식이 올바르지 않을 시 실행이 되지 않을 수 있습니다.\n" << endl;
-
-			select_list();
+			
+			cin >> route;
+			select_list(route);
 
 			break;
 		};
 		case 2 : {
 			cout << "\nDccon_list.js 파일 경로를 알려주세요" << endl;
-			cout << "(기본 설정 경로를 사용 시 'default_path' 를 입력해주세요." << endl;
-
-			select_entry();
+			cout << "(기본 설정 경로를 사용 시 'default_path' 를 입력해주세요." << endl;			
+			cin >> route;
+			select_entry(route);
 			break;
 		};
 		case 3: {
@@ -116,6 +118,16 @@ bool DCCon_Editor::select_menu(int input) {
 			return false;
 		}
 		case 0: {
+			select_list("images/dccon");
+			select_entry("default_path");
+			if (status_list_load == status_entry_load && status_entry_load == true)
+				status_ready = list_entry_match();
+			if (status_ready != true)
+				cout << "자동 작업에 실패하였습니다. 직접 경로 지정방식을 이용해주세요." << endl;
+			else {
+				list_entry_editor();			
+			}
+
 			break;
 		};
 
@@ -131,23 +143,21 @@ bool DCCon_Editor::select_menu(int input) {
 	return true;
 }
 
-void DCCon_Editor::select_list() {
-	string route;
-
-	cin >> route;
+void DCCon_Editor::select_list(string route) {	
 
 	while (!list_reader(route)) {
 		cout << "\n잘못된 경로입니다. 다른 경로를 입력해주세요. " << endl;
+		cout << "취소 시 exit를 입력해주세요." << endl;
 		cin >> route;
+
+		if (route == "exit")
+			return;
 	}
 	status_list_load = list_loaded();
 	cout << "작업이 완료되었습니다." << endl;
 }
-void DCCon_Editor::select_entry() {
+void DCCon_Editor::select_entry(string route) {
 
-	string route;
-
-	cin >> route;
 	while(true){
 	if (route != "default_path")
 		if (route.substr(route.size() - 3) != ".js") {
@@ -160,6 +170,11 @@ void DCCon_Editor::select_entry() {
 		break;
 
 	cout << "잘못된 경로입니다. 다시 입력해주세요." << endl;
+	cout << "취소 시 exit를 입력해주세요." << endl;
+
+	cin >> route;
+	if (route == "exit")
+		return;
 	}
 
 	entry_maker();
