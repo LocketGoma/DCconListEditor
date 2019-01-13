@@ -16,6 +16,8 @@ map <string, int>::iterator entry_iter = entry_list.begin();
 /*사실상 메인 코드*/
 //map <string, int> entry_list;
 string default_path = "lib/dccon_list.js";	//기본 경로
+string input_path;
+string temp_file = "temp.dat";
 unique_ptr<fstream> dcconlist;
 
 bool linking(string route) {									//1 번
@@ -24,7 +26,7 @@ bool linking(string route) {									//1 번
 	if (route == "default_path")
 		route = default_path;
 
-
+	input_path = route;
 	dcconlist = make_unique<fstream>(route);
 
 	string temp;
@@ -162,7 +164,7 @@ void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 	string temp;
 	string midpoint;
 	string output;
-	ofstream ofile("test.txt");	//반드시 엔트리 오픈보다 나중에 실행될것.
+	ofstream ofile(temp_file);	//반드시 엔트리 오픈보다 나중에 실행될것.
 	bool end_line = false;
 	dcconlist->seekg(0);
 
@@ -215,9 +217,12 @@ void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 }
 
 void list_entry_copier() {		//리스트 카피.
-	ifstream ifile("test.txt");
+	ifstream ifile(temp_file);
 
-	string temp;
+	dcconlist.reset();
+	dcconlist = make_unique<fstream>(input_path, ios::out|ios::trunc);
+
+	string temp;	
 	
 	if (dcconlist->is_open()) {
 		dcconlist->seekg(0);
@@ -225,12 +230,11 @@ void list_entry_copier() {		//리스트 카피.
 			getline(ifile, temp);
 			*dcconlist << temp << endl;
 		}		
-	}
-	//*dcconlist << "ed" << endl;
+	}	
 	ifile.close();
 
-	dcconlist.~unique_ptr();
-	remove("test.txt");
+	//dcconlist.~unique_ptr();
+	remove(temp_file.c_str());
 
 }
 int list_entry_printer() {
