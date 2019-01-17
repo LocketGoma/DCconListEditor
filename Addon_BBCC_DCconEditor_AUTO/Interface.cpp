@@ -55,6 +55,7 @@ void DCCon_Editor::display() {
 		cout << "현재 시스템 로드 상태 : 리스트 로드 - " << (status_list_load==1 ? "true" : "false");
 		cout << " // 엔트리 로드 - " << (status_entry_load==1 ? "true" : "false");
 		cout << " // 파일 수정 준비 - " << (status_ready ==1 ? "완료" : "");
+		cout << "\n리스트 : 실제 파일 목록을 의미 // 엔트리 : dccon_list.js 파일에 존재하는 디시콘 리스트를 의미" << endl;
 		cout << "\n메뉴를 선택해주세요. :: \n\t\t 1. 디시콘 폴더 지정 // 2. Dccon_list.js 파일 지정 // 3. 비교 실행 "<<endl;
 		cout << "\t\t 4. 디시콘 리스트 출력 // 5. 디시콘 엔트리 출력 // 6. 편집 실행" << endl;
 		cout << "\t\t 8. 프로그램 종료 // 0. 전 잘 모르겠어요. (Auto Mode (v0.1) 실행)" << endl;
@@ -154,7 +155,7 @@ void DCCon_Editor::select_list(string route) {
 			return;
 	}
 	status_list_load = list_loaded();
-	cout << "작업이 완료되었습니다." << endl;
+	cout << "리스트 불러오기 작업이 완료되었습니다." << endl;
 }
 void DCCon_Editor::select_entry(string route) {
 
@@ -179,7 +180,7 @@ void DCCon_Editor::select_entry(string route) {
 
 	entry_maker();
 	status_entry_load = true;
-
+	cout << "엔트리 불러오기 작업이 완료되었습니다." << endl;
 }
 void DCCon_Editor::list_print() {
 	int temp;
@@ -208,6 +209,7 @@ bool DCCon_Editor::list_entry_match() {
 void DCCon_Editor::list_entry_editor() {
 	list_entry_writer();
 	list_entry_copier();
+	cout << "작업이 완료되었습니다." << endl;
 }
 
 
