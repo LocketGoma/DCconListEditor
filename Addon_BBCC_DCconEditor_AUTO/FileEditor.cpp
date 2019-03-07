@@ -166,8 +166,6 @@ void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 	string output;
 	ofstream ofile(temp_file);	//반드시 엔트리 오픈보다 나중에 실행될것.
 	bool end_line = false;
-	bool temp_comma = false;
-	bool clear_start = true;
 	dcconlist->seekg(0);
 
 	if (ofile.is_open()) {
@@ -178,13 +176,12 @@ void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 				if (end_line == true)
 					break;
 
-				ofile << "dcConsData = [";
+				ofile << temp;
 				end_line = true;
 				continue;
 			}
 			midpoint = temp.substr(midpoint.find("name") + 9, temp.find(""",") - (temp.find("name") + 7));
-			output = convert_to_cp949(midpoint.c_str());			
-			temp.substr(temp.size()-1, 1) == "," ? temp_comma = true : temp_comma = false;		//마지막에 출력한 문장이 ','가 있었는지 여부.
+			output = convert_to_cp949(midpoint.c_str());
 #ifdef DEBUG
 			cout << output << endl;
 #endif
@@ -200,15 +197,9 @@ void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 					}
 			}
 		}
-		entry_list.empty() == true ? clear_start = true : clear_start = false;					//빈 파일이었는지 여부
-
 		for (list_iter = name_list.begin(); list_iter != name_list.end(); ++list_iter) {
 			if (list_iter->second == false) {
-				if (!clear_start && !temp_comma)
-					ofile << ",";
-				ofile << endl;
-				clear_start = false;
-				temp_comma = false;
+				ofile << "," << endl;
 				string tp = covert_input_manager(list_iter->first);
 				ofile << tp;
 				list_iter->second = true;
@@ -217,7 +208,7 @@ void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 		}
 		
 	}
-	ofile << "\n ];" << endl;
+	ofile << "\n"+temp << endl;
 
 
 
