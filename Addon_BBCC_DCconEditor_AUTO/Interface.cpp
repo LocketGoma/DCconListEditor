@@ -51,7 +51,7 @@ void DCCon_Editor::display() {
 	while (true) {
 		system("cls");
 		cout << "\n\t\tBBCC 디시콘 리스트 에디터\n\n" << endl;
-		cout << "v0.5\t\t\t\t\tmake by @locketgoma\n\n" << endl;
+		cout << "v0.55\t\t\t\t\tmake by @locketgoma\n\n" << endl;
 		cout << "현재 시스템 로드 상태 : 리스트 로드 - " << (status_list_load==1 ? "true" : "false");
 		cout << " // 엔트리 로드 - " << (status_entry_load==1 ? "true" : "false");
 		cout << " // 파일 수정 준비 - " << (status_ready ==1 ? "완료" : "");
