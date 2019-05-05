@@ -127,12 +127,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FileEditor.cpp" />
-    <ClCompile Include="filereader.cpp" />
+    <ClCompile Include="FilerReader.cpp" />
     <ClCompile Include="Interface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileEditor.h" />
-    <ClInclude Include="filereader.h" />
+    <ClInclude Include="FileReader.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

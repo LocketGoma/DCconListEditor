@@ -1,0 +1,30 @@
+From 3d5260110feb5c17ee9ebe0726f68675d9aecda7 Mon Sep 17 00:00:00 2001
+From: LocketGoma <nothappa@naver.com>
+Date: Thu, 17 Jan 2019 23:28:18 +0900
+Subject: [PATCH] =?UTF-8?q?=EB=B2=84=EC=A0=84=20=ED=83=9C=EA=B7=B8=20'?=
+ =?UTF-8?q?=EB=A7=8C'=20=EC=97=85=EB=8D=B0=EC=9D=B4=ED=8A=B8.=200.55?=
+ =?UTF-8?q?=EB=A1=9C=20=EC=98=AC=EB=A6=BC?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ Addon_BBCC_DCconEditor_AUTO/Interface.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Addon_BBCC_DCconEditor_AUTO/Interface.cpp b/Addon_BBCC_DCconEditor_AUTO/Interface.cpp
+index 5288fc1..d8786be 100644
+--- a/Addon_BBCC_DCconEditor_AUTO/Interface.cpp
++++ b/Addon_BBCC_DCconEditor_AUTO/Interface.cpp
+@@ -51,7 +51,7 @@ void DCCon_Editor::display() {
+ 	while (true) {
+ 		system("cls");
+ 		cout << "\n\t\tBBCC 디시콘 리스트 에디터\n\n" << endl;
+-		cout << "v0.5\t\t\t\t\tmake by @locketgoma\n\n" << endl;
++		cout << "v0.55\t\t\t\t\tmake by @locketgoma\n\n" << endl;
+ 		cout << "현재 시스템 로드 상태 : 리스트 로드 - " << (status_list_load==1 ? "true" : "false");
+ 		cout << " // 엔트리 로드 - " << (status_entry_load==1 ? "true" : "false");
+ 		cout << " // 파일 수정 준비 - " << (status_ready ==1 ? "완료" : "");
+-- 
+2.18.0.windows.1
+

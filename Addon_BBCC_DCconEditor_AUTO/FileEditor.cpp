@@ -62,8 +62,6 @@ bool entry_parser() {								// 2-1¹ø
 	midpoint = input.substr(input.find("name") + 6, input.find(""",") - (input.find("name") + 7));
 	
 
-	
-
 	output = convert_to_cp949(midpoint.c_str());
 
 #ifdef DEBUG
