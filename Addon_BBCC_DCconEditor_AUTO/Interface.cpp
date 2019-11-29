@@ -24,6 +24,8 @@ class DCCon_Editor {
 
 		bool list_entry_match();	//디시콘 리스트/엔트리 매칭
 		void list_entry_editor();
+		bool list_entry_writer_ASCN();	//디시콘 리스트/엔트리 정렬
+
 
 		bool status_list_load;
 		bool status_entry_load;
@@ -51,17 +53,19 @@ void DCCon_Editor::display() {
 	while (true) {
 		system("cls");
 		cout << "\n\t\tBBCC 디시콘 리스트 에디터\n\n" << endl;
-		cout << "v0.55\t\t\t\t\tmake by @locketgoma\n\n" << endl;
+		cout << "v0.57\t\t\t\t\tmake by @locketgoma\n\n" << endl;
 		cout << "현재 시스템 로드 상태 : 리스트 로드 - " << (status_list_load==1 ? "true" : "false");
 		cout << " // 엔트리 로드 - " << (status_entry_load==1 ? "true" : "false");
 		cout << " // 파일 수정 준비 - " << (status_ready ==1 ? "완료" : "");
 		cout << "\n리스트 : 실제 파일 목록을 의미 // 엔트리 : dccon_list.js 파일에 존재하는 디시콘 리스트를 의미" << endl;
 		cout << "\n메뉴를 선택해주세요. :: \n\t\t 1. 디시콘 폴더 지정 // 2. Dccon_list.js 파일 지정 // 3. 비교 실행 "<<endl;
 		cout << "\t\t 4. 디시콘 리스트 출력 // 5. 디시콘 엔트리 출력 // 6. 편집 실행" << endl;
-		cout << "\t\t 8. 프로그램 종료 // 0. 전 잘 모르겠어요. (Auto Mode (v0.1) 실행)" << endl;
+		cout << "\t\t 7. 리스트 정렬 (1~3을 실시한 후 실행해주세요) " << endl;
+		cout << "\t\t 8. 프로그램 종료 // 9. 전 잘 모르겠어요. (Auto Mode (v0.1) 실행)" << endl;
 		
 
 		cin >> input;
+		
 		
 		if (!select_menu(input))
 			break;
@@ -115,10 +119,27 @@ bool DCCon_Editor::select_menu(int input) {
 				list_entry_editor();
 			break;
 		}
+		case 7: {
+			if (status_ready != true)
+				cout << "아직 준비가 되지 않았습니다. 진행상황을 다시 확인해주세요." << endl;
+			else {
+				cout << "해당 기능 이용시 '태그' 정보가 삭제될 수 있습니다." << endl;
+				cout << "실행을 원하시면 Y를 눌러주세요. ::" << endl;
+				char tpyn;
+				cin >> tpyn;
+				if (tpyn == 'Y' || tpyn == 'y') {
+					list_entry_writer_ASCN();
+					break;
+				}
+				else
+					break;
+			}				
+			break;
+		}
 		case 8: {
 			return false;
 		}
-		case 0: {
+		case 9: {
 			select_list("images/dccon");
 			select_entry("default_path");
 			if (status_list_load == status_entry_load && status_entry_load == true)
@@ -160,7 +181,7 @@ void DCCon_Editor::select_list(string route) {
 void DCCon_Editor::select_entry(string route) {
 
 	while(true){
-	if (route != "default_path")
+	if (route != "default_path" && route.length()>4)
 		if (route.substr(route.size() - 3) != ".js") {
 			if (route.substr(route.size() - 1) != "/")
 				route += "/";
@@ -211,7 +232,17 @@ void DCCon_Editor::list_entry_editor() {
 	list_entry_copier();
 	cout << "작업이 완료되었습니다." << endl;
 }
-
+bool DCCon_Editor::list_entry_writer_ASCN() {
+	try {
+		list_entry_writer_ASC();
+		list_entry_copier();
+	}
+	catch (exception e) {
+		cout << "정렬 작업을 실패하였습니다." << endl;
+		return false;
+	}
+	return true;
+}
 
 
 

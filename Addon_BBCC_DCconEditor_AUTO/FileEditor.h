@@ -4,6 +4,7 @@
 #include <fstream>
 #include <locale>
 #include <cstdio>
+#include <algorithm>
 
 
 
@@ -19,6 +20,7 @@ int comparison();
 void list_entry_writer();
 int list_entry_printer();
 void list_entry_copier();
+void list_entry_writer_ASC();
 
 
 
