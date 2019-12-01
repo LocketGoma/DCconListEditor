@@ -154,13 +154,12 @@ bool DCCon_Editor::select_menu(int input) {
 		};
 
 		default: {
-			cout << "잘못된 입력입니다." << endl;
+			cout << "잘못된 입력입니다." << endl;			
 			break;
 		}
 	};
 	cout << "아무 버튼이나 눌러주세요." << endl;
-
-	_getch();
+	_getch();			//아무 입력용
 
 	return true;
 }
