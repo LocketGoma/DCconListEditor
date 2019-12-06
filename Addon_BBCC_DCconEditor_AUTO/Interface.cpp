@@ -51,32 +51,39 @@ void DCCon_Editor::display() {
 	int input = 8;
 
 	while (true) {
-		system("cls");
-		cout << "\n\t\tBBCC 디시콘 리스트 에디터\n\n" << endl;
-		cout << "v0.65\t\t\t\t\tmake by @locketgoma\n\n" << endl;
-		cout << "현재 시스템 로드 상태 : 리스트 로드 - " << (status_list_load==1 ? "true" : "false");
-		cout << " // 엔트리 로드 - " << (status_entry_load==1 ? "true" : "false");
-		cout << " // 파일 수정 준비 - " << (status_ready ==1 ? "완료" : "");
-		cout << "\n리스트 : 실제 파일 목록을 의미 // 엔트리 : dccon_list.js 파일에 존재하는 디시콘 리스트를 의미" << endl;
-		cout << "\n메뉴를 선택해주세요. :: \n\t\t 1. 디시콘 폴더 지정 // 2. Dccon_list.js 파일 지정 // 3. 비교 실행 "<<endl;
-		cout << "\t\t 4. 디시콘 리스트 출력 // 5. 디시콘 엔트리 출력 // 6. 편집 실행" << endl;
-		cout << "\t\t 7. 리스트 정렬 (1~3을 실시한 후 실행해주세요) " << endl;
-		cout << "\t\t 8. 프로그램 종료 // 9. 전 잘 모르겠어요. (Auto Mode (v0.1) 실행)" << endl;
-		
+		try {
+			system("cls");
+			cout << "\n\t\tBBCC 디시콘 리스트 에디터\n\n" << endl;
+			cout << "v0.65\t\t\t\t\tmake by @locketgoma\n\n" << endl;
+			cout << "현재 시스템 로드 상태 : 리스트 로드 - " << (status_list_load == 1 ? "true" : "false");
+			cout << " // 엔트리 로드 - " << (status_entry_load == 1 ? "true" : "false");
+			cout << " // 파일 수정 준비 - " << (status_ready == 1 ? "완료" : "");
+			cout << "\n리스트 : 실제 파일 목록을 의미 // 엔트리 : dccon_list.js 파일에 존재하는 디시콘 리스트를 의미" << endl;
+			cout << "\n메뉴를 선택해주세요. :: \n\t\t 1. 디시콘 폴더 지정 // 2. Dccon_list.js 파일 지정 // 3. 비교 실행 " << endl;
+			cout << "\t\t 4. 디시콘 리스트 출력 // 5. 디시콘 엔트리 출력 // 6. 편집 실행" << endl;
+			cout << "\t\t 7. 리스트 정렬 (1~3을 실시한 후 실행해주세요) " << endl;
+			cout << "\t\t 8. 프로그램 종료 // 9. 전 잘 모르겠어요. (Auto Mode (v0.1) 실행)" << endl;
 
-		cin >> input;
-		
-		
-		if (!select_menu(input))
+
+			cin >> input;
+
+
+			if (!select_menu(input))
+				break;
+
+		}
+		catch (exception e) {
+			cout << e.what() << endl;
+			cout << "해당 메세지를 개발자에게 알려주세요" << endl;
 			break;
-
+		}
 	}
 	cout << "프로그램을 종료합니다." << endl;
 	
 }
 
 bool DCCon_Editor::select_menu(int input) {
-	string route;
+	string route;	
 	switch (input)
 	{
 		case 1 : {
