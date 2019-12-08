@@ -244,7 +244,9 @@ bool DCCon_Editor::list_entry_writer_ASCN() {
 		list_entry_copier();
 	}
 	catch (exception e) {
-		cout << "정렬 작업을 실패하였습니다." << endl;
+		cout << "정렬 작업을 실패하였습니다." << endl;		
+		cout << "해당 메세지를 개발자에게 알려주세요 ::";
+		cout << e.what() << endl;
 		return false;
 	}
 	return true;
