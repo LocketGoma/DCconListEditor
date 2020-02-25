@@ -5,6 +5,7 @@ DCConEditorUI::DCConEditorUI() {
 	status_entry_load = false;
 	status_ready = false;
 	listEditor = make_unique<FileListEditor>();
+	listReader = make_unique<FileListReader>();
 	list_route = "images/dccon";
 	entry_route = "lib/dccon_list.js";
 }
@@ -141,7 +142,7 @@ bool DCConEditorUI::select_menu(int input) {
 
 void DCConEditorUI::select_list(string route) {
 
-	while (!list_reader(route)) {
+	while (!listReader->list_reader(route)) {
 		cout << "\n잘못된 경로입니다. 다른 경로를 입력해주세요. " << endl;
 		cout << "취소 시 exit를 입력해주세요." << endl;
 		cin >> route;
@@ -149,7 +150,7 @@ void DCConEditorUI::select_list(string route) {
 		if (route == "exit")
 			return;
 	}
-	status_list_load = list_loaded();
+	status_list_load = listReader->list_loaded();
 	cout << "리스트 불러오기 작업이 완료되었습니다." << endl;
 }
 void DCConEditorUI::select_entry(string route) {
@@ -180,7 +181,7 @@ void DCConEditorUI::select_entry(string route) {
 void DCConEditorUI::list_print() {
 	int temp;
 	if (status_list_load == true) {
-		temp = dccon_list_print();
+		temp = listReader->dccon_list_print();
 		cout << "총 " << temp << "개의 디시콘이 있습니다." << endl;
 	}
 	else

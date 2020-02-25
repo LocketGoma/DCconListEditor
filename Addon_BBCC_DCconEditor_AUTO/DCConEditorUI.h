@@ -13,6 +13,7 @@ public:
 
 private:
 	unique_ptr<FileListEditor> listEditor;
+	unique_ptr<FileListReader> listReader;
 
 	void display();				//출력부
 	bool select_menu(int input);//메뉴선택

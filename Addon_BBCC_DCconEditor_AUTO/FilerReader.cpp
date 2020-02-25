@@ -5,7 +5,7 @@
 map <string, bool> name_list;	//디시콘 이름 리스트. 이름 / 리스트 존재유무. 일단 wstring 말고 string으로 하고, 노멀 string이 문제생길시 wstring으로 교체할것.
 map <string, bool>::iterator list_iter;
 
-void list_reader() {		//'일단' 구현됨
+void FileListReader::list_reader() {		//'일단' 구현됨
 
 	__cplusplus;
 	string path = "images/dccon";	
@@ -27,7 +27,7 @@ void list_reader() {		//'일단' 구현됨
 
 	list_iter = name_list.begin();
 }
-bool list_reader(string path) {	
+bool FileListReader::list_reader(string path) {
 	try {
 		for (const auto & entry : fs::directory_iterator(path)) {
 			string temp = entry.path().string().substr(path.size() + 1);
@@ -51,10 +51,10 @@ bool list_reader(string path) {
 	return true;
 }
 
-bool list_loaded() {
+bool FileListReader::list_loaded() {
 	return name_list.empty() ? false : true;
 }
-int dccon_list_print() {
+int FileListReader::dccon_list_print() {
 	for (list_iter = name_list.begin(); list_iter != name_list.end(); list_iter++) {
 		cout << list_iter->first << endl;
 	}
@@ -62,7 +62,7 @@ int dccon_list_print() {
 }
 	//디버그용 코드
 #ifdef DEBUG
-void list_tester() {
+void FileListReader::list_tester() {
 	list_reader();
 
 	//dccon_list_print();
