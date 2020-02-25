@@ -6,7 +6,9 @@
 #include <cstdio>
 #include <algorithm>
 
-
+class FileListEditor(){
+	
+}
 
 void entry_maker();
 bool entry_parser();							//while문 안의 반복 함수
