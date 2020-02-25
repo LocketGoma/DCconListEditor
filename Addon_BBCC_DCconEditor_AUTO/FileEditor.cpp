@@ -20,7 +20,7 @@ string input_path;
 string temp_file = "temp.dat";
 unique_ptr<fstream> dcconlist;
 
-bool linking(string route) {									//1 번
+bool FileListEditor::linking(string route) {									//1 번
 	setlocale(LC_ALL, "korean");
 
 	if (route == "default_path")
@@ -44,7 +44,7 @@ bool linking(string route) {									//1 번
 		return false;
 }
 
-void entry_maker() {								// 2번
+void FileListEditor::entry_maker() {								// 2번
 	
 	dcconlist->seekg(16);
 
@@ -54,7 +54,7 @@ void entry_maker() {								// 2번
 		locker = entry_parser();
 	}
 }
-bool entry_parser() {								// 2-1번
+bool FileListEditor::entry_parser() {								// 2-1번
 	string input;
 	string midpoint;
 	string output;
@@ -78,7 +78,7 @@ bool entry_parser() {								// 2-1번
 
 	return true;
 }
-string convert_to_cp949(const char * input) {
+string FileListEditor::convert_to_cp949(const char * input) {
 	iconv_t changer;
 	changer = iconv_open("CP949", "UTF-8");
 
@@ -99,7 +99,7 @@ string convert_to_cp949(const char * input) {
 
 	return answer;
 }
-string convert_to_UTF8(const char * input) {
+string FileListEditor::convert_to_UTF8(const char * input) {
 	iconv_t changer;
 	changer = iconv_open("UTF-8", "CP949");
 
@@ -120,14 +120,14 @@ string convert_to_UTF8(const char * input) {
 
 	return answer;
 }
-string covert_input_manager(string input) {
+string FileListEditor::covert_input_manager(string input) {
 	string temp=convert_to_UTF8(input.c_str());
 	string answer;
 	answer = "\t{name:\"" + temp + "\",\t keywords:[\"" + temp.substr(0, temp.size() - ext_length) + "\"], \t tags:[]}";
 	return answer;
 }
 
-int comparison() {						//비교 수행 부분.
+int FileListEditor::comparison() {						//비교 수행 부분.
 	int entry_size = entry_list.size();
 	int list_size = name_list.size();	
 	
@@ -162,7 +162,7 @@ int comparison() {						//비교 수행 부분.
 	return 1;
 
 }
-void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
+void FileListEditor::list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 	//일단 임시
 	string temp;
 	string midpoint;
@@ -225,7 +225,7 @@ void list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 	ofile.close();
 }
 
-void list_entry_writer_ASC() {	//완성된 리스트를 쓰는 부분 (자동 정렬)
+void FileListEditor::list_entry_writer_ASC() {	//완성된 리스트를 쓰는 부분 (자동 정렬)
 	//일단 임시
 	string temp;
 	ofstream ofile(temp_file);	//반드시 엔트리 오픈보다 나중에 실행될것.
@@ -255,7 +255,7 @@ void list_entry_writer_ASC() {	//완성된 리스트를 쓰는 부분 (자동 정렬)
 	ofile.close();
 }
 
-void list_entry_copier() {		//리스트 카피.
+void FileListEditor::list_entry_copier() {		//리스트 카피.
 	ifstream ifile(temp_file);
 
 	dcconlist.reset();
@@ -276,7 +276,7 @@ void list_entry_copier() {		//리스트 카피.
 	remove(temp_file.c_str());
 
 }
-int list_entry_printer() {
+int FileListEditor::list_entry_printer() {
 	for (entry_iter= entry_list.begin(); entry_iter != entry_list.end(); entry_iter++) {
 		cout << entry_iter->first << endl;
 	}
@@ -287,7 +287,7 @@ int list_entry_printer() {
 
 
 #ifdef DEBUG
-void entry_test() {
+void FileListEditor::entry_test() {
 	if (dcconlist->is_open())
 		cout << "opened" << endl;
 

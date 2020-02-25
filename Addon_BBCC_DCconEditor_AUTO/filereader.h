@@ -6,8 +6,8 @@
 
 namespace fs = std::filesystem;
 
-class FileListReader(){
-}
+class FileListReader {
+};
 
 
 

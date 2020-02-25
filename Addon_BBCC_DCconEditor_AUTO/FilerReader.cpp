@@ -6,6 +6,8 @@ map <string, bool> name_list;	//디시콘 이름 리스트. 이름 / 리스트 존재유무. 일단
 map <string, bool>::iterator list_iter;
 
 void list_reader() {		//'일단' 구현됨
+
+	__cplusplus;
 	string path = "images/dccon";	
 	try {
 		for (const auto & entry : fs::directory_iterator(path)) {			
