@@ -90,8 +90,9 @@ string FileListEditor::convert_to_cp949(const char * input) {
 	size_t stLen = (strlen(input) + 1) * sizeof(char);
 	size_t dsLen = 255;
 
-	if (changer != (iconv_t)(-1))
+	if (changer != (iconv_t)(-1)) {
 		iconv(changer, &test, &stLen, &dest, &dsLen);
+	}
 
 	string answer(deString);
 
@@ -158,9 +159,7 @@ int FileListEditor::comparison() {						//비교 수행 부분.
 		cout << "false" << endl;
 	}
 #endif //  
-
 	return 1;
-
 }
 void FileListEditor::list_entry_writer() {	//완성된 리스트를 쓰는 부분 (임시파일 생성)
 	//일단 임시
