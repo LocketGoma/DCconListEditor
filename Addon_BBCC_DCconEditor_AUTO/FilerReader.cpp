@@ -13,7 +13,7 @@ void FileListReader::list_reader() {		//'일단' 구현됨
 		for (const auto & entry : fs::directory_iterator(path)) {			
 			string temp = entry.path().string().substr(path.size() + 1);
 			for (int i = 0; i < 3; i++) {
-				if (valid_ext_list[i].compare(temp.substr(temp.size() - ext_length)) == 0)	//확장자 확인 비교
+				if (valid_ext_list[i].compare(temp.substr(temp.size() - ext_length)) == 0)	//확장자 확인 비교. 0일때 통과 = 기록
 					name_list.insert(pair<string, bool>(temp, false));				
 			}
 		}
