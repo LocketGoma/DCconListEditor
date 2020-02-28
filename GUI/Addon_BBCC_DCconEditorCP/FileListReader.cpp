@@ -8,11 +8,11 @@ void FileListReader::ListReaderEngineStarter(std::string input) {
 	else {
 		path = input;
 	}
-	ListReader(path);
+	FileListReadingEngine(path);
 }
 
 
-bool FileListReader::ListReader(std::string path) {
+bool FileListReader::FileListReadingEngine(std::string path) {
 	try {
 		for (const auto& entry : fs::directory_iterator(path)) {
 			//붙여서 쓰려고 했는데 가독성이 너무 떨어짐
@@ -30,8 +30,23 @@ bool FileListReader::ListReader(std::string path) {
 	}
 	if (fileList.empty()) {
 		std::cout << "경로에 조건에 맞는 파일이 존재하지 않습니다." << std::endl;
-		false;
+		return false;
 	}
+	fileListIter = fileList.begin();
+	
+	return true;
+}
 
+std::vector<std::string> FileListReader::ListPrinter() {
+	std::vector<std::string> fileListString;
 
+	if (fileList.empty() == true) {
+		std::cout << "파일 리스트가 비어있습니다." << std::endl;	
+	}
+	else {
+		for (fileListIter = fileList.begin(); fileListIter != fileList.end(); fileListIter++) {
+			fileListString.push_back(fileListIter->first);
+		}
+	}
+	return fileListString;
 }
