@@ -18,8 +18,7 @@ namespace fs = std::experimental::filesystem;
 class FileListReader
 {
 	public:
-		void ListReader();
-		void ListReader(std::string path);
+		void ListReaderEngineStarter(std::string input);
 		void ListPrinter();
 
 	private :
@@ -27,7 +26,8 @@ class FileListReader
 		std::map <std::string, bool> fileList;
 		std::map <std::string, bool>::iterator fileListIter;
 		
-		bool FileListReadingEngine(std::string path);
+		bool FileListReadingEngine(std::string path);		
+		bool ListReader(std::string path);
 		
 
 };
