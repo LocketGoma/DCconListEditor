@@ -1,9 +1,10 @@
 #pragma once
+#include "EngineHeader.h"
 #include <fstream>
 #include <locale>
 #include <cstdio>
-#include "EngineHeader.h"
 #include "addition/include/iconv.h"
+
 
 class BBCCListFileReader
 {
@@ -25,8 +26,7 @@ private:
 	bool LoadEntry(std::string);
 	bool ParseEntry();
 	std::string ConvertToCP949(std::string input);
-	std::string ConvertToUTF8(std::string input);
-	std::string ConvertInputManager(std::string input);
+
 
 };
 
