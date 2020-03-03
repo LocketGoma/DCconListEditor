@@ -35,8 +35,7 @@ class FileListReader
 		std::map <std::string, bool> fileList;
 		std::map <std::string, bool>::iterator fileListIter;		
 			
-		bool FileListReadingEngine(std::string path);
-		
+		bool FileListReadingEngine(std::string path);		
 
 };
 
