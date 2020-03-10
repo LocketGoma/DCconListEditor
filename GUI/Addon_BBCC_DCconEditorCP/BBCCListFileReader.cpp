@@ -2,16 +2,10 @@
 
 
 
+//기본형
 bool BBCCListFileReader::LinkingList(std::string route) {
-	std::string path = {};
-	if (route.empty() == true) {
-		path = "lib/dccon_list.js";
-	}
-	else {
-		path = route;
-	}
-
-	if (LoadEntry(path) == false) {
+	
+	if (LoadEntry(route) == false) {
 		std::cout << "리스트 파일의 경로나 파일이 잘못되었습니다." << std::endl;
 		return false;
 	}

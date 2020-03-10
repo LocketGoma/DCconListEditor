@@ -4,16 +4,21 @@
 #include "EngineHeader.h"
 
 //둘다 상속!
-class BBCCListFileEditor : FileListReader, BBCCListFileReader
+class BBCCListFileEditor : BBCCListFileReader
 {
-
+	public :
+		virtual bool LinkingList(std::string route);
 
 
 
 	private :
+		std::unique_ptr<FileListReader> fileListReader;		
+
 		std::string ConvertToUTF8(std::string input);
 		std::string ConvertInputManager(std::string input);
 };
+
+
 /*
 class FileListReader
 {

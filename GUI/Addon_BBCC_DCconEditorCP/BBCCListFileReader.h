@@ -9,7 +9,7 @@
 class BBCCListFileReader
 {
 public:	
-	bool LinkingList(std::string route);
+	virtual bool LinkingList(std::string route);
 
 private:
 	iconv_t changer;
@@ -24,6 +24,8 @@ private:
 	bool LoadEntry(std::string);
 	bool ParseEntry();
 	std::string ConvertToCP949(std::string input);
+
+	friend class BBCCListFileEditor;
 
 };
 
