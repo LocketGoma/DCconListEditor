@@ -3,13 +3,11 @@
 #include "BBCCListFileReader.h"
 #include "EngineHeader.h"
 
-//둘다 상속!
+#define EXT_LENGTH 4		//확장자 길이
 class BBCCListFileEditor : BBCCListFileReader
 {
 	public :
 		virtual bool LinkingList(std::string route);
-
-
 
 	private :
 		std::unique_ptr<FileListReader> fileListReader;		
