@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include "addition/include/iconv.h"
+#define EXT_LENGTH 4		//확장자 길이
 
 
 //#define DEBUG

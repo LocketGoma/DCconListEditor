@@ -1,5 +1,16 @@
 #include "BBCCListFileEditor.h"
 
+BBCCListFileEditor::BBCCListFileEditor() {
+	fileListReader = std::make_unique<FileListReader>();
+	fileListVector = fileListReader->ListPrinter();
+}
+
+
+bool BBCCListFileEditor::TryCompareList() {
+
+	return Comparison();
+}
+
 
 bool BBCCListFileEditor::LinkingList(std::string route) {
 	std::string path = {};
@@ -9,7 +20,6 @@ bool BBCCListFileEditor::LinkingList(std::string route) {
 	else {
 		path = route;
 	}
-
 	if (LoadEntry(path) == false) {
 		std::cout << "리스트 파일의 경로나 파일이 잘못되었습니다." << std::endl;
 		return false;
@@ -18,8 +28,14 @@ bool BBCCListFileEditor::LinkingList(std::string route) {
 		std::cout << "파일의 내용중 일부가 잘못되었습니다." << std::endl;
 		return false;
 	}
-
 	return true;
+}
+
+bool BBCCListFileEditor::Comparison() {
+	//int listEntrySize = fileListReader.
+		
+
+
 }
 
 std::string BBCCListFileEditor::ConvertToUTF8(std::string input) {

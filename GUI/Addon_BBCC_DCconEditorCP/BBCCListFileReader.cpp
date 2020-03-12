@@ -37,8 +37,7 @@ bool BBCCListFileReader::LoadEntry(std::string path) {
 }
 
 bool BBCCListFileReader::ParseEntry() {
-
-
+	
 	if (dcconEntry == nullptr || dcconEntry->fail() == true) {
 		return false;
 	}

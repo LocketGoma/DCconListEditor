@@ -3,15 +3,32 @@
 #include "BBCCListFileReader.h"
 #include "EngineHeader.h"
 
-#define EXT_LENGTH 4		//확장자 길이
+
+/*
+	작동구조 :
+		1. LinkingList에서 ListEntry를 읽는다. (LoadEntry())
+		2. LoadEntry()에서 읽은 데이터를 Parsing 한다. (ParseEntry())
+		2-2. ParseEntry() 에서 ConvertToCP949() 메소드 호출로 wstring -> string으로 변환.
+		3. Compare() 수행 (파일 리스트와 리스트파일데이터를 비교)
+		4. FileEdit() 수행
+		4-2. ConvertToUTF8() 호출, string -> wstring으로 변환
+		4-3. ConvertInputManager() 에서 양식에 맞게 파일 출력
+		5. 파일 완성.
+
+*/
 class BBCCListFileEditor : BBCCListFileReader
 {
-	public :
-		virtual bool LinkingList(std::string route);
+	public :		
+		BBCCListFileEditor();
+		virtual bool LinkingList(std::string route) override;
+		bool TryCompareList();
 
 	private :
-		std::unique_ptr<FileListReader> fileListReader;		
+		bool Comparison();
 
+		std::unique_ptr<FileListReader> fileListReader;
+
+		std::vector<std::string> fileListVector;
 		std::string ConvertToUTF8(std::string input);
 		std::string ConvertInputManager(std::string input);
 };
