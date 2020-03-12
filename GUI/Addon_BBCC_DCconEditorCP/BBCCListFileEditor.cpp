@@ -31,9 +31,34 @@ bool BBCCListFileEditor::LinkingList(std::string route) {
 	return true;
 }
 
-bool BBCCListFileEditor::Comparison() {
-	//int listEntrySize = fileListReader.
-		
+//여기가 제에ㅔ에에에에에일느림
+bool BBCCListFileEditor::Comparison() {	
+	//리스트 엔트리
+	int listEntrySize = entryList.size();
+
+	//파일 리스트
+	int FileListSize = fileListVector.size();
+	
+	
+
+	try {
+		for (entryListIter = entryList.begin() ; entryListIter != entryList.end() ; ++entryListIter){
+			for (int i = 0; i < FileListSize; i++) {
+				if (fileListVector[i].compare(entryListIter->first) == 0) {
+					entryListIter->second++;
+				}
+			}
+		}
+	}
+	catch (_exception e) {
+		return false;
+	}
+}
+//제일 중요하고 조심해야하는 부분
+void BBCCListFileEditor::ListEntryWriter() {
+	std::string buffer;
+	std::string tempMidData;
+	std::string tempOutput;
 
 
 }

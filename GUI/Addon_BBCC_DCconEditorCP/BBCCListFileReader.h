@@ -12,8 +12,8 @@ public:
 	virtual bool LinkingList(std::string route);
 
 private:
-	std::map <std::string, bool> entryList;
-	std::map <std::string, bool>::iterator entryListIter;
+	std::map <std::string, int> entryList;
+	std::map <std::string, int>::iterator entryListIter;
 	std::unique_ptr<std::fstream> dcconEntry;
 
 	bool LoadEntry(std::string);

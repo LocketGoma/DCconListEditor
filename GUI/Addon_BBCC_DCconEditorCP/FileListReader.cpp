@@ -50,3 +50,4 @@ std::vector<std::string> FileListReader::ListPrinter() {
 	}
 	return fileListString;
 }
+
