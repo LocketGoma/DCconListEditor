@@ -27,7 +27,7 @@ class BBCCListFileEditor : BBCCListFileReader
 		bool Comparison();
 
 		std::unique_ptr<FileListReader> fileListReader;
-		void ListEntryWriter();
+		bool ListEntryWriter();
 		
 		std::vector<std::string> fileListVector;
 		std::string ConvertToUTF8(std::string input);

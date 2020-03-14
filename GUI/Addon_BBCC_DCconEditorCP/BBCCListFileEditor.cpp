@@ -55,11 +55,23 @@ bool BBCCListFileEditor::Comparison() {
 	}
 }
 //제일 중요하고 조심해야하는 부분
-void BBCCListFileEditor::ListEntryWriter() {
+bool BBCCListFileEditor::ListEntryWriter() {
 	std::string buffer;
 	std::string tempMidData;
 	std::string tempOutput;
+	std::unique_ptr<std::ofstream> tempBufferFile;
+	tempBufferFile = std::make_unique<std::ofstream>("temp.bat");
+	bool isEndLine = false;
+	bool isComma = false;
+	bool isClearStart = true;
 
+
+	if (tempBufferFile->is_open()) {
+
+
+		tempBufferFile->close();
+		return true;
+	}
 
 }
 
