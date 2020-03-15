@@ -27,7 +27,7 @@ namespace fs = std::experimental::filesystem;
 class FileListReader
 {
 	public:
-		void ListReaderEngineStarter(std::string input);
+		bool ListReaderEngineStarter(std::string input);
 		std::vector<std::string> ListPrinter();
 
 	private :

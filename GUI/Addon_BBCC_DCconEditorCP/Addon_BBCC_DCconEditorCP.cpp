@@ -1,6 +1,8 @@
 ﻿// Addon_BBCC_DCconEditorCP.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
+#include "BBCCListFileEditor.h"
 
+/*
 #include "framework.h"
 #include "Addon_BBCC_DCconEditorCP.h"
 #include <iostream>
@@ -179,4 +181,15 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
+}
+*/
+
+int main() {
+    std::unique_ptr<BBCCListFileEditor> Editor = std::make_unique<BBCCListFileEditor>();
+
+    
+
+
+
+    return 0;
 }

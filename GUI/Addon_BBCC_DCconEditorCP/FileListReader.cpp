@@ -1,6 +1,6 @@
 #include "FileListReader.h"
 
-void FileListReader::ListReaderEngineStarter(std::string input) {
+bool FileListReader::ListReaderEngineStarter(std::string input) {
 	std::string path;
 	if (input.empty() == true) {
 		path = "images/dccon";
@@ -8,7 +8,7 @@ void FileListReader::ListReaderEngineStarter(std::string input) {
 	else {
 		path = input;
 	}
-	FileListReadingEngine(path);
+	return FileListReadingEngine(path);
 }
 
 

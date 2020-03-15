@@ -2,7 +2,10 @@
 
 BBCCListFileEditor::BBCCListFileEditor() {
 	fileListReader = std::make_unique<FileListReader>();
-	fileListVector = fileListReader->ListPrinter();
+	
+	
+	
+	
 }
 
 
@@ -88,6 +91,23 @@ bool BBCCListFileEditor::ListEntryWriter() {
 	}
 
 }
+
+
+bool BBCCListFileEditor::ListReaderStart(std::string input) {
+	return fileListReader->ListReaderEngineStarter(input);
+}
+
+bool BBCCListFileEditor::LoadFileList() {
+	fileListVector = fileListReader->ListPrinter();
+
+	return fileListVector.empty();
+}
+
+std::vector<std::string> BBCCListFileEditor::ListReadingList() {
+	return fileListVector;
+}
+
+
 
 std::string BBCCListFileEditor::ConvertToUTF8(std::string input) {
 	//각각 c_str 선언 해주는게 나을까 변수에 붙이는게 나을까...
