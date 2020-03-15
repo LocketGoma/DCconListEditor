@@ -29,7 +29,6 @@ class FileListReader
 	public:
 		void ListReaderEngineStarter(std::string input);
 		std::vector<std::string> ListPrinter();
-		std::map<std::string, bool> GetFileList();
 
 	private :
 		const std::string valid_ext_list[3] = { ".jpg",".gif",".png" };

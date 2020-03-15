@@ -32,6 +32,10 @@ class BBCCListFileEditor : BBCCListFileReader
 		std::vector<std::string> fileListVector;
 		std::string ConvertToUTF8(std::string input);
 		std::string ConvertInputManager(std::string input);
+
+		//std::map <std::string, int> entryList;
+		//std::map <std::string, int>::iterator entryListIter;
+		//std::unique_ptr<std::fstream> dcconEntry;
 };
 
 

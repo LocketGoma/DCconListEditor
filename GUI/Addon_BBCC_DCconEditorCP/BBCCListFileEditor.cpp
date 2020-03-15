@@ -67,6 +67,20 @@ bool BBCCListFileEditor::ListEntryWriter() {
 
 
 	if (tempBufferFile->is_open()) {
+		tempBufferFile->write("dcConsData = [",sizeof(std::string)*16);
+		entryList.empty() == true ? isClearStart = true : isClearStart = false;
+		
+		for (int i = 0; i < fileListVector.size(); i++) {
+			if (!isClearStart && !isComma) {
+				tempBufferFile->write(",", 1);
+			}
+			tempBufferFile->write("\n", 1);
+			isClearStart = isComma = false;
+			buffer = ConvertInputManager(fileListVector[i]);
+			tempBufferFile->write(buffer.c_str(), sizeof(buffer));
+		}
+
+		//??? 이래도 되나?
 
 
 		tempBufferFile->close();
