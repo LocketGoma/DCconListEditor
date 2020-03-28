@@ -1,6 +1,6 @@
 BBCC Addon : DCCon List Editor
 ===
-version 0.5.7
+version 0.6.5
 
 해당 프로그램의 소스코드는 Visual Studio 2017 / C++17 이상에서만 정상작동을 보장합니다.
 
