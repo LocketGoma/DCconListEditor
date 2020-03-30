@@ -161,7 +161,10 @@ void EditorUXInterface::MatchListAndEntry() {
 void EditorUXInterface::EditEntryList() {
 	MatchListAndEntry();
 	if (statusReady == true) {
-		listEditor->ListEntryWriter();
+		listEditor->EditEntryFile();
+	}
+	else {
+		std::cout << "파일 수정 준비가 완료되지 않았습니다." << std::endl;
 	}
 	
 }

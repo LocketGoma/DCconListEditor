@@ -22,14 +22,13 @@ class BBCCListFileEditor : BBCCListFileReader
 		BBCCListFileEditor();
 
 		//FileListReader 파생
-		bool ListReaderStart(std::string input);
-		
+		bool ListReaderStart(std::string input);		
 
 
-		virtual bool LinkingList(std::string route) override;
+		virtual bool LinkingList(std::string path) override;
 		bool PrintEntryList() { return BBCCListFileReader::PrintEntryList(); }	//엔트리 리스트 출력
 		bool TryCompareList(); //Call Comparison
-		bool ListEntryWriter();
+		int EditEntryFile();	//엔트리 파일 수정.
 
 
 		std::vector<std::string> ListReadingList();
@@ -38,8 +37,12 @@ class BBCCListFileEditor : BBCCListFileReader
 	private :
 		std::unique_ptr<FileListReader> fileListReader;
 		std::vector<std::string> fileListVector;
+		std::string entryPath;
+		std::string tempFilePath;
 
-		bool Comparison();
+		bool Comparison();				//1. 비교 수행
+		bool ListEntryWriter();			//2. 조합된 리스트를 가지고 임시파일 생성.
+		bool CopyCompareList();			//3. 완성된 파일을 임시파일에서 원본으로 덮어씌우기.
 		int LoadFileList();		
 		
 		std::string ConvertToUTF8(std::string input);

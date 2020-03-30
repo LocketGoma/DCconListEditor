@@ -2,6 +2,7 @@
 
 BBCCListFileEditor::BBCCListFileEditor() {
 	fileListReader = std::make_unique<FileListReader>();	
+	tempFilePath = "temp.bat";
 }
 
 
@@ -10,15 +11,14 @@ bool BBCCListFileEditor::TryCompareList() {
 }
 
 
-bool BBCCListFileEditor::LinkingList(std::string route) {
-	std::string path = {};
-	if (route.empty() == true) {
-		path = "lib/dccon_list.js";
+bool BBCCListFileEditor::LinkingList(std::string path) {	
+	if (path.empty() == true) {
+		entryPath = "lib/dccon_list.js";
 	}
 	else {
-		path = route;
+		entryPath = path;
 	}
-	if (LoadEntry(path) == false) {
+	if (LoadEntry(entryPath) == false) {
 		std::cout << "엔트리 파일의 경로나 파일이 잘못되었습니다." << std::endl;
 		return false;
 	}
@@ -35,8 +35,6 @@ bool BBCCListFileEditor::Comparison() {
 	int listEntrySize = entryList.size();
 	//파일 리스트
 	int FileListSize = fileListVector.size();	
-	
-
 	try {
 		for (entryListIter = entryList.begin() ; entryListIter != entryList.end() ; ++entryListIter){
 			for (int i = 0; i < FileListSize; i++) {
@@ -51,13 +49,41 @@ bool BBCCListFileEditor::Comparison() {
 	}
 	return true;
 }
+
+int BBCCListFileEditor::EditEntryFile() {	
+	//0		: 정상
+	//1		: 파일 리스트가 비어있음
+	//2		: 리스트 비교시 이상
+	//3		: 임시 파일 생성시 이상
+	//4		: 임시 파일 복사시 이상
+	//-1	: 그 외 오류
+	try {
+		if (fileListVector.empty() == true) {
+			return 1;
+		}
+		if (TryCompareList() == false) {
+			return 2;
+		}
+		if (ListEntryWriter() == false) {
+			return 3;
+		}
+		if (CopyCompareList() == false) {
+			return 4;
+		}
+	}
+	catch (std::exception e) {
+		return -1;
+	}
+	return 0;
+}
+
 //제일 중요하고 조심해야하는 부분
 bool BBCCListFileEditor::ListEntryWriter() {
 	std::string buffer;
 	std::string tempMidData;
 	std::string tempOutput;
 	std::unique_ptr<std::ofstream> tempBufferFile;
-	tempBufferFile = std::make_unique<std::ofstream>("temp.bat");
+	tempBufferFile = std::make_unique<std::ofstream>(tempFilePath);
 	bool isEndLine = false;
 	bool isComma = false;
 	bool isClearStart = true;
@@ -85,6 +111,32 @@ bool BBCCListFileEditor::ListEntryWriter() {
 	return false;
 }
 
+
+bool BBCCListFileEditor::CopyCompareList() {
+	try {
+		std::unique_ptr<std::fstream> dcconEntry;
+		dcconEntry = std::make_unique<std::fstream>(entryPath, std::ios::out | std::ios::trunc);
+
+		std::unique_ptr < std::ifstream> tempEntry;
+		tempEntry = std::make_unique<std::ifstream>(tempFilePath);
+
+		std::string buffer;
+
+		dcconEntry->seekg(0);
+		while (!tempEntry->eof()) {
+			std::getline(*tempEntry, buffer);
+			*dcconEntry << buffer << std::endl;
+		}
+
+		tempEntry->close();
+	}
+	catch (std::exception e) {		//실패시 바로 false 리턴
+		return false;
+	}
+	//정상 복사 완료시 임시 파일 삭제 후 true 리턴
+	//remove(tempFilePath.c_str());
+	return true;
+}
 
 bool BBCCListFileEditor::ListReaderStart(std::string input) {
 	return fileListReader->ListReaderEngineStarter(input);

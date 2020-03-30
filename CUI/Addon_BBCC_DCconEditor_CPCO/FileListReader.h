@@ -28,9 +28,10 @@ class FileListReader
 {
 	public:
 		bool ListReaderEngineStarter(std::string input);
-		std::vector<std::string> ListPrinter();
+		std::vector<std::string> ListPrinter();				
 
 	private :
+		std::string path;
 		const std::string valid_ext_list[3] = { ".jpg",".gif",".png" };
 		std::map <std::string, bool> fileList;
 		std::map <std::string, bool>::iterator fileListIter;		
