@@ -48,10 +48,12 @@ bool BBCCListFileReader::ParseEntry() {
 
 	while (!dcconEntry->eof()) {
 		std::getline(*dcconEntry, tempInput);
+		//std::cout << tempInput;
 		if (tempInput.find("name") == std::string::npos) { break; }
 		tempMidData = tempInput.substr(tempInput.find("name") + 6, tempInput.find(""",") - (tempInput.find("name") + 7));
-		tempOutput = ConvertToCP949(tempMidData);
-		entryList.insert(std::pair<std::string, int>(tempOutput, 0));
+		//tempOutput = ConvertToCP949(tempMidData);	<- ¾ê ¿ÖÀÌ·¡
+		//std::cout << tempMidData << std::endl;
+		entryList.insert(std::pair<std::string, int>(tempMidData, 0));
 	}
 	std::cout<<entryList.size()<<std::endl;
 	return true;
