@@ -25,7 +25,7 @@ void EditorUXInterface::DisplayMenu() {
 			std::cout << "\n리스트 : 실제 파일 목록을 의미 // 엔트리 : dccon_list.js 파일에 존재하는 디시콘 리스트를 의미" << std::endl;
 			std::cout << "\n메뉴를 선택해주세요. :: \n\t\t 1. 디시콘 폴더 지정 // 2. Dccon_list.js 파일 지정 // 3. 편집 실행 " << std::endl;
 			std::cout << "\t\t 4. 디시콘 리스트 출력 // 5. 디시콘 엔트리 출력" << std::endl;
-			std::cout << "\t\t 7. 리스트 정렬 (1~2를 실시한 후 실행해주세요) " << std::endl;
+			//std::cout << "\t\t 7. 리스트 정렬 (1~2를 실시한 후 실행해주세요) " << std::endl;
 			std::cout << "\t\t 8. 프로그램 종료 // 9. 전 잘 모르겠어요. (Auto Mode (v0.1) 실행)" << std::endl;
 
 			if (SelectMenu(std::cin) == false) {
@@ -62,7 +62,7 @@ bool EditorUXInterface::SelectMenu(std::istream& input) {
 		break;
 	}
 	case 3: {
-		std::cout << "3" << std::endl;
+		std::cout << "파일 수정을 시작합니다." << std::endl;
 		EditEntryList();
 		break;
 	}
@@ -77,15 +77,20 @@ bool EditorUXInterface::SelectMenu(std::istream& input) {
 		break;
 	}
 	case 6: {
-		std::cout << "6" << std::endl;
+		std::cout << "자동 정렬기능은 현재 재 개발중입니다." << std::endl;
 		break;
 	}
 	case 7: {
-		std::cout << "7" << std::endl;
+		std::cout << "해당 기능은 현재 작동하지 않습니다." << std::endl;
 		break;
 	}
 	case 8: {
 		return false;
+		break;
+	}
+	case 9: {
+		std::cout << "파일 수정을 자동으로 수행합니다." << std::endl;
+		AutoEntryEditor();
 		break;
 	}
 	case -1: {
@@ -156,17 +161,59 @@ void EditorUXInterface::PrintEntryList() {
 }
 
 void EditorUXInterface::MatchListAndEntry() {
+	int listcount = listEditor->LoadFileList();	
+
 	statusReady = listEditor->TryCompareList();
 }
 void EditorUXInterface::EditEntryList() {
 	MatchListAndEntry();
 	if (statusReady == true) {
-		listEditor->EditEntryFile();
+		switch (listEditor->EditEntryFile()) {
+			case 1: {
+				std::cout << "파일 리스트가 비어있습니다." << std::endl;
+				break;
+			}
+			case 2: {
+				std::cout << "파일 리스트 비교 도중 이상이 발생하였습니다." << std::endl;
+				break;
+			}
+			case 3: {
+				std::cout << "임시파일 생성 도중 이상이 발생하였습니다." << std::endl;
+				break;
+			}
+			case 4: {
+				std::cout << "엔트리 파일 수정 도중 이상이 발생하였습니다." << std::endl;
+				break;
+			}
+			case 0: {
+				std::cout << "파일 수정이 완료되었습니다." << std::endl;
+				break;
+			}
+			default: {
+				std::cout << "예기치 못한 문제가 발생하였습니다. \n출력된 에러메시지를 개발자에게 알려주세요." << std::endl;
+				break;
+			}
+		}
 	}
 	else {
 		std::cout << "파일 수정 준비가 완료되지 않았습니다." << std::endl;
 	}
 	
+}
+void EditorUXInterface::AutoEntryEditor() {
+	if (listEditor->ListReaderStart("images/dccon") == false) {
+		std::cout << "파일 목록을 읽는데 실패하였습니다." << std::endl;
+		return;
+	}
+	statusListLoad = true;
+	if (listEditor->LinkingList("lib/dccon_list.js") == false) {
+		std::cout << "디시콘 엔트리 파일을 읽는데 실패하였습니다." << std::endl;
+		return;
+	}
+	statusEntryLoad = true;
+
+
+	EditEntryList();
 }
 
 

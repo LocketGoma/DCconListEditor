@@ -72,6 +72,7 @@ int BBCCListFileEditor::EditEntryFile() {
 		}
 	}
 	catch (std::exception e) {
+		std::cout << e.what() << std::endl;
 		return -1;
 	}
 	return 0;
@@ -93,11 +94,12 @@ bool BBCCListFileEditor::ListEntryWriter() {
 		entryList.empty() == true ? isClearStart = true : isClearStart = false;
 		
 		for (int i = 0; i < fileListVector.size(); i++) {
-			if (!isClearStart && !isComma) {
+			if (!isClearStart && isComma) {
 				tempBufferFile->write(",", 1);
 			}
 			tempBufferFile->write("\n", 1);
-			isClearStart = isComma = false;
+			isClearStart = false;
+			isComma = true;
 			buffer = ConvertInputManager(fileListVector[i]);
 			*tempBufferFile << buffer;
 		}
@@ -134,7 +136,7 @@ bool BBCCListFileEditor::CopyCompareList() {
 		return false;
 	}
 	//정상 복사 완료시 임시 파일 삭제 후 true 리턴
-	//remove(tempFilePath.c_str());
+	remove(tempFilePath.c_str());
 	return true;
 }
 
@@ -144,12 +146,11 @@ bool BBCCListFileEditor::ListReaderStart(std::string input) {
 
 int BBCCListFileEditor::LoadFileList() {
 	fileListVector = fileListReader->ListPrinter();
-
+	std::cout << "총 " << fileListVector.size() << "개의 파일이 인식되었습니다." << std::endl;
 	return fileListVector.size();
 }
 
-std::vector<std::string> BBCCListFileEditor::ListReadingList() {
-	std::cout << "총 " << LoadFileList() << "개의 파일이 인식되었습니다." << std::endl;
+std::vector<std::string> BBCCListFileEditor::ListReadingList() {	
 	if (fileListVector.empty() == true) {
 		std::cout << "List is empty!" << std::endl;
 	}

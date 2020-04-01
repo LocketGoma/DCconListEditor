@@ -29,6 +29,7 @@ class BBCCListFileEditor : BBCCListFileReader
 		bool PrintEntryList() { return BBCCListFileReader::PrintEntryList(); }	//엔트리 리스트 출력
 		bool TryCompareList(); //Call Comparison
 		int EditEntryFile();	//엔트리 파일 수정.
+		int LoadFileList();		//파일 리스트 읽기.
 
 
 		std::vector<std::string> ListReadingList();
@@ -43,7 +44,7 @@ class BBCCListFileEditor : BBCCListFileReader
 		bool Comparison();				//1. 비교 수행
 		bool ListEntryWriter();			//2. 조합된 리스트를 가지고 임시파일 생성.
 		bool CopyCompareList();			//3. 완성된 파일을 임시파일에서 원본으로 덮어씌우기.
-		int LoadFileList();		
+		
 		
 		std::string ConvertToUTF8(std::string input);
 		std::string ConvertInputManager(std::string input);

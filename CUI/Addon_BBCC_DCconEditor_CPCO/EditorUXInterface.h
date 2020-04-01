@@ -24,7 +24,9 @@ private :
 	void PrintFileList();		//파일 리스트 보여주기
 	void PrintEntryList();		//파일 엔트리 보여주기
 	void MatchListAndEntry();	//리스트와 엔트리 매칭
-	void EditEntryList();		//파일 엔트리 수정.
+	void EditEntryList();		//파일 엔트리 수정. (기본형)
+
+	void AutoEntryEditor();		//모든 기능을 자동으로 수행.
 
 	inline bool CheckReady() { return statusListLoad == statusEntryLoad == true; }
 
