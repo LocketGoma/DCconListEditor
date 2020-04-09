@@ -30,7 +30,7 @@ class BBCCListFileEditor : BBCCListFileReader
 		bool TryCompareList(); //Call Comparison
 		int EditEntryFile();	//엔트리 파일 수정.
 		int LoadFileList();		//파일 리스트 읽기.
-
+		bool Clear();			//상속 아님.
 
 		std::vector<std::string> ListReadingList();
 

@@ -51,8 +51,8 @@ bool BBCCListFileReader::ParseEntry() {
 		//std::cout << tempInput;
 		if (tempInput.find("name") == std::string::npos) { break; }
 		tempMidData = tempInput.substr(tempInput.find("name") + 6, tempInput.find(""",") - (tempInput.find("name") + 7));
-		//tempOutput = ConvertToCP949(tempMidData);	<- 얘 왜이래
-		//std::cout << tempMidData << std::endl;
+		tempOutput = ConvertToCP949(tempMidData);	//<- 얘 왜이래
+		std::cout << tempMidData << std::endl;
 		entryList.insert(std::pair<std::string, int>(tempMidData, 0));
 	}
 	std::cout<<entryList.size()<<std::endl;
@@ -89,4 +89,17 @@ bool BBCCListFileReader::PrintEntryList() {
 	}
 	return true;
 
+}
+
+
+//할당 해제
+bool BBCCListFileReader::Clear() {
+	try {
+		entryList.clear();
+		if (dcconEntry != nullptr &&dcconEntry->is_open()) { dcconEntry->close(); }
+	}
+	catch (std::exception e) {
+		return false;
+	}
+	return true;
 }

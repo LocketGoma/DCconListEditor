@@ -12,6 +12,7 @@ class BBCCListFileReader
 public:		
 	virtual bool LinkingList(std::string route);
 	bool PrintEntryList();
+	bool Clear();
 
 private:
 	std::map <std::string, int> entryList;

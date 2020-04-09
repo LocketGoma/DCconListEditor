@@ -28,7 +28,8 @@ class FileListReader
 {
 	public:
 		bool ListReaderEngineStarter(std::string input);
-		std::vector<std::string> ListPrinter();				
+		std::vector<std::string> ListPrinter();
+		bool Clear();
 
 	private :
 		std::string path;

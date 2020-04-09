@@ -50,3 +50,8 @@ std::vector<std::string> FileListReader::ListPrinter() {
 	return fileListString;
 }
 
+bool FileListReader::Clear() {
+	fileList.clear();
+
+	return fileList.empty();
+}

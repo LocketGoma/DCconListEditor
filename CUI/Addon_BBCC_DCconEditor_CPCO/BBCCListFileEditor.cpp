@@ -188,9 +188,13 @@ std::string BBCCListFileEditor::ConvertToUTF8(std::string input) {
 	return answer;
 }
 std::string BBCCListFileEditor::ConvertInputManager(std::string input) {
-	//std::string convertString = ConvertToUTF8(input);
-	std::string convertString = input;
+	std::string convertString = ConvertToUTF8(input);
+	//std::string convertString = input;
 	std::string answer;
 	answer = "\t{name:\"" + convertString + "\",\t keywords:[\"" + convertString.substr(0, convertString.size() - EXT_LENGTH) + "\"], \t tags:[]}";
 	return answer;
+}
+bool BBCCListFileEditor::Clear() {
+	fileListVector.clear();
+	return BBCCListFileReader::Clear();
 }

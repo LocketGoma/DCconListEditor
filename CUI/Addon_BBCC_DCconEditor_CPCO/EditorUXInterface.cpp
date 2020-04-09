@@ -201,19 +201,23 @@ void EditorUXInterface::EditEntryList() {
 	
 }
 void EditorUXInterface::AutoEntryEditor() {
-	if (listEditor->ListReaderStart("images/dccon") == false) {
-		std::cout << "파일 목록을 읽는데 실패하였습니다." << std::endl;
-		return;
-	}
-	statusListLoad = true;
-	if (listEditor->LinkingList("lib/dccon_list.js") == false) {
-		std::cout << "디시콘 엔트리 파일을 읽는데 실패하였습니다." << std::endl;
-		return;
-	}
-	statusEntryLoad = true;
+	if (statusReady == false) {
+		listEditor->Clear();
 
+		if (listEditor->ListReaderStart("images/dccon") == false) {
+			std::cout << "파일 목록을 읽는데 실패하였습니다." << std::endl;
+			return;
+		}
+		statusListLoad = true;
+		if (listEditor->LinkingList("lib/dccon_list.js") == false) {
+			std::cout << "디시콘 엔트리 파일을 읽는데 실패하였습니다." << std::endl;
+			return;
+		}
+		statusEntryLoad = true;
+	}
 
 	EditEntryList();
+	
 }
 
 
