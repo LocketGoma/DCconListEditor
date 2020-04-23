@@ -354,3 +354,4 @@ MigrationBackup/
 Debug/
 .vs/
 Generated Files/
+Release/
