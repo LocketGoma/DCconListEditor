@@ -93,7 +93,8 @@ bool BBCCListFileEditor::ListEntryWriter() {
 		*tempBufferFile << "dcConsData = [";
 		entryList.empty() == true ? isClearStart = true : isClearStart = false;
 		
-		for (int i = 0; i < fileListVector.size(); i++) {
+		//굳이 uint 쓸필요 없음! warning 떠서 추가.
+		for (unsigned int i = 0; i < fileListVector.size(); i++) {
 			if (!isClearStart && isComma) {
 				tempBufferFile->write(",", 1);
 			}

@@ -15,8 +15,8 @@ public:
 	bool Clear();
 
 private:
-	std::map <std::string, int> entryList;
-	std::map <std::string, int>::iterator entryListIter;
+	std::unordered_map <std::string, int> entryList;
+	std::unordered_map <std::string, int>::iterator entryListIter;
 	std::unique_ptr<std::fstream> dcconEntry;
 
 	bool LoadEntry(std::string);

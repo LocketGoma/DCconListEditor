@@ -6,12 +6,14 @@
 
 /*
 	작동구조 :
-		1. LinkingList에서 ListEntry를 읽는다. (LoadEntry())
-		2. LoadEntry()에서 읽은 데이터를 Parsing 한다. (ParseEntry())
-		2-2. ParseEntry() 에서 ConvertToCP949() 메소드 호출로 wstring -> string으로 변환.
+		1. LinkingList에서 ListEntry를 읽는다. (LoadEntry()) - CP949 인코딩
+		2. LoadEntry()에서 읽은 데이터를 Parsing 한다. (ParseEntry()) - UniCode (8) 인코딩
+		2-2. ParseEntry() 에서 ConvertToCP949() 메소드 호출로 UTF-8에서 CP949로 컨버팅.
+		이 과정에서 구현형이 wstring -> string으로 변환 (내부구현은 wstring, 실제는 string)
 		3. Comparison() 수행 (파일 리스트와 리스트파일데이터를 비교)
 		4. FileEdit() 수행
-		4-2. ConvertToUTF8() 호출, string -> wstring으로 변환
+		4-2. ConvertToUTF8() 호출, UTF-8에서 CP949로 컨버팅
+		이 과정에서 구현형이 string -> wstring으로 변환
 		4-3. ConvertInputManager() 에서 양식에 맞게 파일 출력
 		5. 파일 완성.
 
