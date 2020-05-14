@@ -3,6 +3,7 @@
 #include <fstream>
 #include <locale>
 #include <cstdio>
+#include <vector>
 #include "addition/include/iconv.h"
 
 
@@ -14,9 +15,9 @@ public:
 	bool PrintEntryList();
 	bool Clear();
 
-private:
-	std::unordered_map <std::string, int> entryList;
-	std::unordered_map <std::string, int>::iterator entryListIter;
+private:	
+	std::unordered_map <std::string, std::vector<std::string>> entryList;
+	std::unordered_map <std::string, std::vector<std::string>>::iterator entryListIter;
 	std::unique_ptr<std::fstream> dcconEntry;
 
 	bool LoadEntry(std::string);

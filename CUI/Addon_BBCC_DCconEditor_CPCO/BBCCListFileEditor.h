@@ -49,7 +49,7 @@ class BBCCListFileEditor : BBCCListFileReader
 		
 		
 		std::string ConvertToUTF8(std::string input);
-		std::string ConvertInputManager(std::string input);
+		std::string ConvertInputManager(std::string input, std::vector<std::string> tags);
 
 		//std::map <std::string, int> entryList;
 		//std::map <std::string, int>::iterator entryListIter;

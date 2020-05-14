@@ -39,7 +39,8 @@ bool BBCCListFileEditor::Comparison() {
 		for (entryListIter = entryList.begin() ; entryListIter != entryList.end() ; ++entryListIter){
 			for (int i = 0; i < FileListSize; i++) {
 				if (fileListVector[i].compare(entryListIter->first) == 0) {
-					entryListIter->second++;
+					//entryListIter->second++;
+					;
 				}
 			}
 		}
@@ -93,6 +94,8 @@ bool BBCCListFileEditor::ListEntryWriter() {
 		*tempBufferFile << "dcConsData = [";
 		entryList.empty() == true ? isClearStart = true : isClearStart = false;
 		
+
+
 		//굳이 uint 쓸필요 없음! warning 떠서 추가.
 		for (unsigned int i = 0; i < fileListVector.size(); i++) {
 			if (!isClearStart && isComma) {
@@ -101,7 +104,12 @@ bool BBCCListFileEditor::ListEntryWriter() {
 			tempBufferFile->write("\n", 1);
 			isClearStart = false;
 			isComma = true;
-			buffer = ConvertInputManager(fileListVector[i]);
+
+			entryListIter = entryList.find(fileListVector[i]);
+
+			std::vector<std::string> inputData = entryListIter->second;
+			buffer = ConvertInputManager(fileListVector[i], inputData);
+			
 			*tempBufferFile << buffer;
 		}
 
@@ -188,11 +196,17 @@ std::string BBCCListFileEditor::ConvertToUTF8(std::string input) {
 
 	return answer;
 }
-std::string BBCCListFileEditor::ConvertInputManager(std::string input) {
+std::string BBCCListFileEditor::ConvertInputManager(std::string input, std::vector<std::string> tags) {
+	std::string tagsLine;
+	for (std::string tag : tags) {
+		tagsLine += ("\"" + tag + "\",");
+	}
+
 	std::string convertString = ConvertToUTF8(input);
+	std::string convertTags = ConvertToUTF8(tagsLine.substr(0, tagsLine.size() - 1));
 	//std::string convertString = input;
 	std::string answer;
-	answer = "\t{name:\"" + convertString + "\",\t keywords:[\"" + convertString.substr(0, convertString.size() - EXT_LENGTH) + "\"], \t tags:[]}";
+	answer = "\t{name:\"" + convertString + "\",\t keywords:[\"" + convertString.substr(0, convertString.size() - EXT_LENGTH) + "\"], \t tags:[" + convertTags +"]}";
 	return answer;
 }
 bool BBCCListFileEditor::Clear() {

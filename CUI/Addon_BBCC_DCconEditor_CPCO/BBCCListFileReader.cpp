@@ -51,8 +51,12 @@ bool BBCCListFileReader::ParseEntry() {
 		//std::cout << tempInput;
 		if (tempInput.find("name") == std::string::npos) { break; }
 		tempMidData = tempInput.substr(tempInput.find("name") + 6, tempInput.find(""",") - (tempInput.find("name") + 7));
-		tempOutput = ConvertToCP949(tempMidData);	//<- 얘 왜이래
+		tempOutput = ConvertToCP949(tempMidData);	
 		std::cout << tempOutput << std::endl;
+
+		//int to vector<string> 변환 필요.
+
+
 		entryList.insert(std::pair<std::string, int>(tempOutput, 0));
 	}
 	std::cout<<entryList.size()<<std::endl;
