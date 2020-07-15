@@ -3,6 +3,8 @@
 BBCCListFileEditor::BBCCListFileEditor() {
 	fileListReader = std::make_unique<FileListReader>();	
 	tempFilePath = "temp.bat";
+
+	entryPath = "lib/dccon_list.js";
 }
 
 
@@ -35,11 +37,13 @@ bool BBCCListFileEditor::Comparison() {
 	int listEntrySize = entryList.size();
 	//파일 리스트
 	int FileListSize = fileListVector.size();	
+	bool checkFlag = false;
 	try {
-		for (entryListIter = entryList.begin() ; entryListIter != entryList.end() ; ++entryListIter){
-			for (int i = 0; i < FileListSize; i++) {
-				if (fileListVector[i].compare(entryListIter->first) == 0) {
+		for (int i = 0; i < FileListSize; i++) {
+			for (entryListIter = entryList.begin() ; entryListIter != entryList.end() ; ++entryListIter){
+				if (fileListVector[i].compare(entryListIter->first) == 0) {		//다르면 빼는 부분이 없어짐... 이면 할 필요가 있나?
 					//entryListIter->second++;
+					//checkFlag = true;
 					;
 				}
 			}
@@ -49,6 +53,18 @@ bool BBCCListFileEditor::Comparison() {
 		return false;
 	}
 	return true;
+}
+bool BBCCListFileEditor::Comparison(std::string compareString) {
+	//리스트 엔트리
+	//파일 리스트
+	int FileListSize = fileListVector.size();
+	bool checkFlag = false;
+		for (int i = 0; i < FileListSize; i++) {
+				if (fileListVector[i].compare(compareString) == 0) {		//다르면 빼는 부분이 없어짐... 이면 할 필요가 있나?
+					return true;
+			}
+		}
+	return false;
 }
 
 int BBCCListFileEditor::EditEntryFile() {	
@@ -106,10 +122,14 @@ bool BBCCListFileEditor::ListEntryWriter() {
 			isComma = true;
 
 			entryListIter = entryList.find(fileListVector[i]);
+			if (entryListIter != entryList.end()) {
+				buffer = ConvertInputManager(entryListIter->first, entryListIter->second);
+			}
+			else {
+				;
+			}
 
-			std::vector<std::string> inputData = entryListIter->second;
-			buffer = ConvertInputManager(fileListVector[i], inputData);
-			
+
 			*tempBufferFile << buffer;
 		}
 

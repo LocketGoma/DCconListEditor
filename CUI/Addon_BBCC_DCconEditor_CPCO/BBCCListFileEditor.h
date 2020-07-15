@@ -10,10 +10,13 @@
 		2. LoadEntry()에서 읽은 데이터를 Parsing 한다. (ParseEntry()) - UniCode (8) 인코딩
 		2-2. ParseEntry() 에서 ConvertToCP949() 메소드 호출로 UTF-8에서 CP949로 컨버팅.
 		이 과정에서 구현형이 wstring -> string으로 변환 (내부구현은 wstring, 실제는 string)
-		3. Comparison() 수행 (파일 리스트와 리스트파일데이터를 비교)
+
+		3. Comparison() 수행 (파일 리스트와 리스트파일데이터를 비교)		// <- 수정 필요.
 		4. FileEdit() 수행
 		4-2. ConvertToUTF8() 호출, UTF-8에서 CP949로 컨버팅
 		이 과정에서 구현형이 string -> wstring으로 변환
+
+
 		4-3. ConvertInputManager() 에서 양식에 맞게 파일 출력
 		5. 파일 완성.
 
@@ -44,6 +47,7 @@ class BBCCListFileEditor : BBCCListFileReader
 		std::string tempFilePath;
 
 		bool Comparison();				//1. 비교 수행
+		bool Comparison(std::string);	//1. 비교 수행 : 하나씩 수행.
 		bool ListEntryWriter();			//2. 조합된 리스트를 가지고 임시파일 생성.
 		bool CopyCompareList();			//3. 완성된 파일을 임시파일에서 원본으로 덮어씌우기.
 		
