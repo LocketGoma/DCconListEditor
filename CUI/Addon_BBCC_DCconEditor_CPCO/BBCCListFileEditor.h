@@ -43,6 +43,7 @@ class BBCCListFileEditor : BBCCListFileReader
 	private :
 		std::unique_ptr<FileListReader> fileListReader;
 		std::vector<std::string> fileListVector;
+		std::map<std::string, int> fileListMap;		//위의 벡터값을 받아서 int 맵으로 변경해줌.
 		std::string entryPath;
 		std::string tempFilePath;
 

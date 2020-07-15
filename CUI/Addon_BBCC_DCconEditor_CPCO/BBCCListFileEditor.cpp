@@ -7,7 +7,7 @@ BBCCListFileEditor::BBCCListFileEditor() {
 	entryPath = "lib/dccon_list.js";
 }
 
-
+//일단 사용중지.
 bool BBCCListFileEditor::TryCompareList() {
 	return Comparison();
 }
@@ -39,14 +39,17 @@ bool BBCCListFileEditor::Comparison() {
 	int FileListSize = fileListVector.size();	
 	bool checkFlag = false;
 	try {
-		for (int i = 0; i < FileListSize; i++) {
-			for (entryListIter = entryList.begin() ; entryListIter != entryList.end() ; ++entryListIter){
-				if (fileListVector[i].compare(entryListIter->first) == 0) {		//다르면 빼는 부분이 없어짐... 이면 할 필요가 있나?
-					//entryListIter->second++;
-					//checkFlag = true;
-					;
+		for (entryListIter = entryList.begin() ; entryListIter != entryList.end() ; ++entryListIter){
+			for (int i = 0; i < FileListSize; i++) {
+				if (fileListVector[i].compare(entryListIter->first) == 0) {
+					checkFlag = true;
+					break;
 				}
 			}
+			if (checkFlag == false) {
+				entryList.erase(entryListIter->first);
+			}
+			checkFlag = false;
 		}
 	}
 	catch (std::exception e) {
@@ -54,9 +57,12 @@ bool BBCCListFileEditor::Comparison() {
 	}
 	return true;
 }
+//이거 '파일 리스트에는 있는데 엔트리 리스트에는 없는 경우'가 잡히나?
+//1. 파일 리스트에는 있으나 엔트리 리스트에는 없음	= ?
+//2. 둘다 있음										= true
+//3. 파일 리스트에는 없으나 엔트리 리스트에는 있음	= 삭제 대상.
 bool BBCCListFileEditor::Comparison(std::string compareString) {
-	//리스트 엔트리
-	//파일 리스트
+	//파일 리스트 = 실제 파일 목록들!
 	int FileListSize = fileListVector.size();
 	bool checkFlag = false;
 		for (int i = 0; i < FileListSize; i++) {
@@ -78,9 +84,9 @@ int BBCCListFileEditor::EditEntryFile() {
 		if (fileListVector.empty() == true) {
 			return 1;
 		}
-		if (TryCompareList() == false) {
-			return 2;
-		}
+		//if (TryCompareList() == false) {
+		//	return 2;
+		//}
 		if (ListEntryWriter() == false) {
 			return 3;
 		}
