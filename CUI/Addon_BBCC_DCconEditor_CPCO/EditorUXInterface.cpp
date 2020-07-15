@@ -149,7 +149,7 @@ void EditorUXInterface::LoadEntryList() {
 }
 void EditorUXInterface::PrintFileList() {
 	if (statusListLoad == true) {
-		for (std::string var : listEditor->ListReadingList())
+		for (std::string var : listEditor->ReadingFileList())
 		{
 			std::cout << var << std::endl;
 		}

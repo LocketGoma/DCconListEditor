@@ -7,6 +7,16 @@ BBCCListFileEditor::BBCCListFileEditor() {
 	entryPath = "lib/dccon_list.js";
 }
 
+//모든 리스트벡터를 리스트맵으로 변경시켜야 됨.
+bool BBCCListFileEditor::MakeFileListMap(std::vector<std::string> fileList) {
+	for (std::string fileName : fileList) {
+		fileListMap.insert(std::pair<std::string, int>(fileName, 0));
+	}
+	return fileListMap.empty();
+}
+
+
+
 //일단 사용중지.
 bool BBCCListFileEditor::TryCompareList() {
 	return Comparison();
@@ -36,13 +46,17 @@ bool BBCCListFileEditor::Comparison() {
 	//리스트 엔트리
 	int listEntrySize = entryList.size();
 	//파일 리스트
-	int FileListSize = fileListVector.size();	
+	int FileListSize = fileListMap.size();
+	std::map<std::string, int>::iterator fileListiter;
+
 	bool checkFlag = false;
 	try {
+		//1차 비교
 		for (entryListIter = entryList.begin() ; entryListIter != entryList.end() ; ++entryListIter){
-			for (int i = 0; i < FileListSize; i++) {
-				if (fileListVector[i].compare(entryListIter->first) == 0) {
+			for (fileListiter = fileListMap.begin(); fileListiter != fileListMap.end(); ++fileListiter) {
+				if (fileListiter->first.compare(entryListIter->first) == 0) {
 					checkFlag = true;
+					++fileListiter->second;
 					break;
 				}
 			}
@@ -51,27 +65,42 @@ bool BBCCListFileEditor::Comparison() {
 			}
 			checkFlag = false;
 		}
+
+		//2차 비교
+		std::vector<std::string> temp;
+		temp.push_back(fileListiter->first);
+		for (fileListiter = fileListMap.begin(); fileListiter != fileListMap.end(); ++fileListiter) {
+			if (fileListiter->second == 0) {
+
+				entryList.insert(std::pair<std::string, std::vector<std::string>>(fileListiter->first, temp));
+			}
+		}
 	}
 	catch (std::exception e) {
 		return false;
 	}
+
+
+
+
 	return true;
 }
 //이거 '파일 리스트에는 있는데 엔트리 리스트에는 없는 경우'가 잡히나?
 //1. 파일 리스트에는 있으나 엔트리 리스트에는 없음	= ?
 //2. 둘다 있음										= true
 //3. 파일 리스트에는 없으나 엔트리 리스트에는 있음	= 삭제 대상.
-bool BBCCListFileEditor::Comparison(std::string compareString) {
-	//파일 리스트 = 실제 파일 목록들!
-	int FileListSize = fileListVector.size();
-	bool checkFlag = false;
-		for (int i = 0; i < FileListSize; i++) {
-				if (fileListVector[i].compare(compareString) == 0) {		//다르면 빼는 부분이 없어짐... 이면 할 필요가 있나?
-					return true;
-			}
-		}
-	return false;
-}
+
+//bool BBCCListFileEditor::Comparison(std::string compareString) {
+//	//파일 리스트 = 실제 파일 목록들!
+//	int FileListSize = fileListVector.size();
+//	bool checkFlag = false;
+//		for (int i = 0; i < FileListSize; i++) {
+//				if (fileListVector[i].compare(compareString) == 0) {		//다르면 빼는 부분이 없어짐... 이면 할 필요가 있나?
+//					return true;
+//			}
+//		}
+//	return false;
+//}
 
 int BBCCListFileEditor::EditEntryFile() {	
 	//0		: 정상
@@ -81,7 +110,7 @@ int BBCCListFileEditor::EditEntryFile() {
 	//4		: 임시 파일 복사시 이상
 	//-1	: 그 외 오류
 	try {
-		if (fileListVector.empty() == true) {
+		if (fileListMap.empty() == true) {
 			return 1;
 		}
 		//if (TryCompareList() == false) {
@@ -102,6 +131,52 @@ int BBCCListFileEditor::EditEntryFile() {
 }
 
 //제일 중요하고 조심해야하는 부분
+
+//bool BBCCListFileEditor::ListEntryWriter() {
+//	std::string buffer;
+//	std::string tempMidData;
+//	std::string tempOutput;
+//	std::unique_ptr<std::ofstream> tempBufferFile;
+//	tempBufferFile = std::make_unique<std::ofstream>(tempFilePath);
+//	bool isEndLine = false;
+//	bool isComma = false;
+//	bool isClearStart = true;
+//
+//	if (tempBufferFile->is_open()) {
+//		*tempBufferFile << "dcConsData = [";
+//		entryList.empty() == true ? isClearStart = true : isClearStart = false;
+//		
+//
+//
+//		//굳이 uint 쓸필요 없음! warning 떠서 추가.
+//		for (unsigned int i = 0; i < fileListVector.size(); i++) {
+//			if (!isClearStart && isComma) {
+//				tempBufferFile->write(",", 1);
+//			}
+//			tempBufferFile->write("\n", 1);
+//			isClearStart = false;
+//			isComma = true;
+//
+//			entryListIter = entryList.find(fileListVector[i]);
+//			if (entryListIter != entryList.end()) {
+//				buffer = ConvertInputManager(entryListIter->first, entryListIter->second);
+//			}
+//			else {
+//				;
+//			}
+//
+//
+//			*tempBufferFile << buffer;
+//		}
+//
+//		*tempBufferFile << "\n ];";
+//		//??? 이래도 되나?
+//
+//		tempBufferFile->close();
+//		return true;
+//	}
+//	return false;
+//}
 bool BBCCListFileEditor::ListEntryWriter() {
 	std::string buffer;
 	std::string tempMidData;
@@ -115,34 +190,11 @@ bool BBCCListFileEditor::ListEntryWriter() {
 	if (tempBufferFile->is_open()) {
 		*tempBufferFile << "dcConsData = [";
 		entryList.empty() == true ? isClearStart = true : isClearStart = false;
-		
+
+		//다시 짜시오.
 
 
-		//굳이 uint 쓸필요 없음! warning 떠서 추가.
-		for (unsigned int i = 0; i < fileListVector.size(); i++) {
-			if (!isClearStart && isComma) {
-				tempBufferFile->write(",", 1);
-			}
-			tempBufferFile->write("\n", 1);
-			isClearStart = false;
-			isComma = true;
 
-			entryListIter = entryList.find(fileListVector[i]);
-			if (entryListIter != entryList.end()) {
-				buffer = ConvertInputManager(entryListIter->first, entryListIter->second);
-			}
-			else {
-				;
-			}
-
-
-			*tempBufferFile << buffer;
-		}
-
-		*tempBufferFile << "\n ];";
-		//??? 이래도 되나?
-
-		tempBufferFile->close();
 		return true;
 	}
 	return false;
@@ -180,16 +232,23 @@ bool BBCCListFileEditor::ListReaderStart(std::string input) {
 }
 
 int BBCCListFileEditor::LoadFileList() {
-	fileListVector = fileListReader->ListPrinter();
-	std::cout << "총 " << fileListVector.size() << "개의 파일이 인식되었습니다." << std::endl;
-	return fileListVector.size();
+	MakeFileListMap(fileListReader->ListPrinter());
+	std::cout << "총 " << fileListMap.size() << "개의 파일이 인식되었습니다." << std::endl;
+
+	return fileListMap.size();
 }
 
-std::vector<std::string> BBCCListFileEditor::ListReadingList() {	
-	if (fileListVector.empty() == true) {
+std::vector<std::string> BBCCListFileEditor::ReadingFileList() {	
+	std::vector <std::string> fileListNames;
+	if (fileListMap.empty() == true) {
 		std::cout << "List is empty!" << std::endl;
 	}
-	return fileListVector;
+	for (auto &fileList : fileListMap) {
+		fileListNames.push_back(fileList.first);
+	}
+
+
+	return fileListNames;
 }
 
 
@@ -236,6 +295,6 @@ std::string BBCCListFileEditor::ConvertInputManager(std::string input, std::vect
 	return answer;
 }
 bool BBCCListFileEditor::Clear() {
-	fileListVector.clear();
+	fileListMap.clear();
 	return BBCCListFileReader::Clear();
 }

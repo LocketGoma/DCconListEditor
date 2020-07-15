@@ -34,25 +34,28 @@ class BBCCListFileEditor : BBCCListFileReader
 		bool PrintEntryList() { return BBCCListFileReader::PrintEntryList(); }	//엔트리 리스트 출력
 		bool TryCompareList(); //Call Comparison
 		int EditEntryFile();	//엔트리 파일 수정.
-		int LoadFileList();		//파일 리스트 읽기.
+		int LoadFileList();		//파일 리스트 읽기.	(여기서 벡터 데이터 삽입됨.)
 		bool Clear();			//상속 아님.
 
-		std::vector<std::string> ListReadingList();
+		std::vector<std::string> ReadingFileList();
 
 
 	private :
 		std::unique_ptr<FileListReader> fileListReader;
-		std::vector<std::string> fileListVector;
+		//std::vector<std::string> fileListVector;
 		std::map<std::string, int> fileListMap;		//위의 벡터값을 받아서 int 맵으로 변경해줌.
 		std::string entryPath;
 		std::string tempFilePath;
 
-		bool Comparison();				//1. 비교 수행
-		bool Comparison(std::string);	//1. 비교 수행 : 하나씩 수행.
-		bool ListEntryWriter();			//2. 조합된 리스트를 가지고 임시파일 생성.
-		bool CopyCompareList();			//3. 완성된 파일을 임시파일에서 원본으로 덮어씌우기.
+		bool MakeFileListMap(std::vector<std::string>);			//리스트 파일 맵 생성기.
+		bool Comparison();										//1. 비교 수행
+		//bool Comparison(std::string);							//1. 비교 수행 : 하나씩 수행.
+		bool ListEntryWriter();									//2. 조합된 리스트를 가지고 임시파일 생성.
+		bool CopyCompareList();									//3. 완성된 파일을 임시파일에서 원본으로 덮어씌우기.
 		
+		void EditTagList();										//드디어 만듭니다 태그 에디터
 		
+
 		std::string ConvertToUTF8(std::string input);
 		std::string ConvertInputManager(std::string input, std::vector<std::string> tags);
 
